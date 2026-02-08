@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personal Finance Dashboard</title>
+
+<style>
+:root{
+  --bg:#eef1f9;
+
+  --salary:#2ecc71;
+  --sip:#5b6cff;
+  --gold:#f4c430;
+  --car:#8e44ad;
+
+  --border:#e5e7f0;
+  --text:#111827;
+  --muted:#6b7280;
+  --danger:#dc2626;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family: Inter, Arial, sans-serif;
+  background:linear-gradient(180deg,#f2f4fb,#e9ecf8);
+  color:var(--text);
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#5b6cff,#8e44ad);
+  color:#fff;
+  padding:20px;
+  text-align: center;
+}
+.header h1{margin:0;font-size:34px;}
+.header p{margin-top:4px;opacity:.9}
+
+/* LAYOUT */
+.dashboard{
+  padding:26px;
+  display:grid;
+  grid-template-columns:2.2fr 1fr;
+  gap:26px;
+}
+@media(max-width:1000px){
+  .dashboard{grid-template-columns:1fr;}
+}
+
+/* GLASS CARD */
+.card{
+  position:relative;
+  background:rgba(255,255,255,.72);
+  backdrop-filter: blur(14px);
+  border-radius:20px;
+  padding:20px;
+  border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 16px 40px rgba(0,0,0,.12);
+  transition:.35s ease;
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 24px 55px rgba(0,0,0,.18);
+}
+
+/* LEFT ACCENT */
+.card::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:0;
+  width:5px;
+  height:calc(100% - 24px);
+  border-radius:0 8px 8px 0;
+}
+.salary-card::before{background:var(--salary)}
+.sip-card::before{background:var(--sip)}
+.gold-card::before{background:var(--gold)}
+.car-card::before{background:var(--car)}
+
+/* TITLES */
+.card h2{
+  margin:0 0 16px;
+  font-size:18px;
+  display:flex;
+  gap:8px;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+th,td{
+  border:1px solid var(--border);
+  padding:8px;
+  text-align:center;
+}
+th{background:#f8f9fd;font-weight:600}
+tfoot td{
+  font-weight:700;
+  background:#fff7db;
+}
+
+input{
+  width:100%;
+  border:none;
+  outline:none;
+  background:transparent;
+  text-align:center;
+  font-size:14px;
+}
+
+/* BUTTON */
+button{
+  margin-top:14px;
+  padding:8px 22px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:13px;
+}
+.sip-btn{background:var(--sip);color:#fff}
+.gold-btn{background:var(--gold);color:#000}
+
+/* NEGATIVE */
+.negative{
+  color:var(--danger);
+  font-weight:600;
+  background:#fff1f2;
+}
+
+/* BEST BADGE */
+.badge{
+  margin-left:6px;
+  background:#e9f9f0;
+  color:#15803d;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* GOLD DELETE */
+.delete{
+  cursor:pointer;
+  color:var(--danger);
+  font-weight:bold;
+}
+
+/* DP */
+.dp-wrap{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:22px;
+  align-items:center;
+}
+.circle{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:#ede9fe;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.circle-inner{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.percent{font-size:26px;font-weight:700}
+.label{font-size:12px;color:var(--muted);margin-top:6px}
+
+/* DP INFO */
+.dp-info{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.dp-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.dp-row input{
+  width:120px;
+  text-align:right;
+  border-bottom:1px solid #d1d5db;
+}
+.dp-row strong{font-size:16px}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>Personal Finance Dashboard (2026)</h1>
+  <p>Salary, savings, investments & car down payment</p>
+</div>
+
+<div class="dashboard">
+
+<!-- LEFT -->
+<div class="card salary-card">
+<h2>💰 Salary & Savings</h2>
+<table>
+<tr><th>Month</th><th>Planned</th><th>Expense</th><th>Actual</th></tr>
+<tbody id="salary"></tbody>
+<tr>
+  <th colspan="3">Total Savings</th>
+  <th id="total">₹0</th>
+</tr>
+</table>
+</div>
+
+<!-- RIGHT -->
+<div>
+
+<div class="card sip-card">
+<h2>📈 SIP Tracker</h2>
+<table>
+<tr><th>Fund</th><th>Amount</th></tr>
+<tbody id="sip"></tbody>
+</table>
+<button class="sip-btn" onclick="addSip()">+ Add SIP</button>
+</div>
+
+<br>
+
+<div class="card gold-card">
+<h2>🪙 Gold Ledger</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th><th>Gold (gm)</th><th>Rate</th><th>Amount</th><th></th>
+</tr>
+</thead>
+<tbody id="gold"></tbody>
+<tfoot>
+<tr>
+  <td colspan="2">Total Weight</td>
+  <td colspan="1" id="goldWeight">0 gm</td>
+  <td id="goldTotal">₹0</td>
+  <td></td>
+</tr>
+</tfoot>
+</table>
+<button class="gold-btn" onclick="addGold()">+ Add Purchase</button>
+</div>
+
+<br>
+
+<div class="card car-card">
+<h2>🚗 Car Down Payment</h2>
+
+<div class="dp-wrap">
+<div class="circle" id="dpCircle">
+  <div class="circle-inner">
+    <div class="percent" id="dpPercent">0%</div>
+    <div class="label" id="dpLabel">Readiness</div>
+  </div>
+</div>
+
+<div class="dp-info">
+  <div class="dp-row">
+    <span>Target DP</span>
+    <input id="targetDP" type="number">
+  </div>
+  <div class="dp-row">
+    <span>Saved</span>
+    <strong id="dpSaved">₹0</strong>
+  </div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const data=JSON.parse(localStorage.getItem("finance")||"{}");
+
+const formatINR=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+
+/* SALARY */
+const salary=document.getElementById("salary");
+months.forEach(m=>{
+salary.innerHTML+=`
+<tr>
+<td data-m="${m}">${m}</td>
+<td><input data-k="${m}p"></td>
+<td><input data-k="${m}e"></td>
+<td data-a="${m}">₹0</td>
+</tr>`;
+});
+
+/* SIP */
+let sipCount=data.sipCount||1;
+function renderSip(){
+sip.innerHTML="";
+for(let i=0;i<sipCount;i++){
+sip.innerHTML+=`
+<tr>
+<td><input data-k="sn${i}"></td>
+<td><input data-k="sa${i}"></td>
+</tr>`;
+}}
+renderSip();
+function addSip(){
+sipCount++; data.sipCount=sipCount;
+save(); renderSip(); restore(); calc();
+}
+
+/* GOLD */
+let goldCount=(data.goldCount!==undefined)?data.goldCount:3;
+function renderGold(){
+gold.innerHTML="";
+for(let i=0;i<goldCount;i++){
+gold.innerHTML+=`
+<tr>
+<td><input type="date" data-k="gd${i}"></td>
+<td><input data-k="gg${i}"></td>
+<td><input data-k="gr${i}"></td>
+<td data-ga="${i}">₹0</td>
+<td><span class="delete" onclick="deleteGold(${i})">✕</span></td>
+</tr>`;
+}}
+renderGold();
+
+function addGold(){
+goldCount++; data.goldCount=goldCount;
+save(); renderGold(); restore(); calc();
+}
+function deleteGold(i){
+if(goldCount<=1) return;
+for(let k=i;k<goldCount-1;k++){
+data[`gd${k}`]=data[`gd${k+1}`];
+data[`gg${k}`]=data[`gg${k+1}`];
+data[`gr${k}`]=data[`gr${k+1}`];
+}
+goldCount--; data.goldCount=goldCount;
+save(); renderGold(); restore(); calc();
+}
+
+/* RESTORE */
+function restore(){
+document.querySelectorAll("input").forEach(i=>{
+if(i.dataset.k && data[i.dataset.k]!=null) i.value=data[i.dataset.k];
+});
+if(data.targetDP) targetDP.value=data.targetDP;
+}
+restore();
+
+/* SAVE */
+function save(){
+localStorage.setItem("finance",JSON.stringify(data));
+}
+
+/* EVENTS */
+document.addEventListener("input",e=>{
+if(e.target.dataset.k){
+data[e.target.dataset.k]=e.target.value;
+save(); calc();
+}
+if(e.target.id==="targetDP"){
+data.targetDP=e.target.value;
+save(); calc();
+}
+});
+
+/* CALC */
+function calc(){
+let total=0, maxMonth=null, maxVal=-Infinity;
+
+/* reset badges */
+document.querySelectorAll(".badge").forEach(b=>b.remove());
+
+months.forEach(m=>{
+let p=+document.querySelector(`[data-k="${m}p"]`).value||0;
+let e=+document.querySelector(`[data-k="${m}e"]`).value||0;
+let a=p-e;
+
+const cell=document.querySelector(`[data-a="${m}"]`);
+cell.innerText=formatINR(a);
+cell.classList.toggle("negative", a<0);
+
+if(a>maxVal){maxVal=a; maxMonth=m;}
+total+=a;
+});
+
+if(maxMonth){
+document.querySelector(`[data-m="${maxMonth}"]`)
+.insertAdjacentHTML("beforeend",`<span class="badge">BEST</span>`);
+}
+
+document.getElementById("total").innerText=formatINR(total);
+
+/* GOLD TOTALS */
+let goldSum=0, goldWt=0;
+for(let i=0;i<goldCount;i++){
+let g=+document.querySelector(`[data-k="gg${i}"]`)?.value||0;
+let r=+document.querySelector(`[data-k="gr${i}"]`)?.value||0;
+let amt=g*r;
+
+document.querySelector(`[data-ga="${i}"]`).innerText=formatINR(amt);
+goldSum+=amt;
+goldWt+=g;
+}
+document.getElementById("goldTotal").innerText=formatINR(goldSum);
+document.getElementById("goldWeight").innerText=goldWt+" gm";
+
+/* DP */
+let target=+targetDP.value||0;
+let pct=target?Math.min(100,(total/target*100).toFixed(0)):0;
+dpSaved.innerText=formatINR(total);
+dpPercent.innerText=pct+"%";
+
+if(pct>=100){
+dpLabel.innerText="TARGET ACHIEVED 🎉";
+dpCircle.style.background=
+`conic-gradient(var(--salary) ${pct*3.6}deg,#ede9fe 0deg)`;
+}else{
+dpLabel.innerText="Readiness";
+dpCircle.style.background=
+`conic-gradient(var(--car) ${pct*3.6}deg,#ede9fe 0deg)`;
+}
+}
+calc();
+</script>
+
+</body>
+</html>
