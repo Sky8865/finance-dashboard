@@ -63,8 +63,8 @@ input:focus,select:focus{outline:0;border-color:var(--a1);box-shadow:0 0 8px var
 .tl span{color:var(--a3)}
 .qa{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--a3),var(--a2));color:var(--bg);font:700 24px system-ui;line-height:1;box-shadow:0 0 14px var(--gl);cursor:pointer}
 .status{font:500 14px Rajdhani,system-ui;color:var(--mute)}
-.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}.tabs::-webkit-scrollbar{display:none}
-.tabs button{flex:none;display:flex;align-items:center;gap:6px;font:700 16px Rajdhani,system-ui;letter-spacing:.04em;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 15px;cursor:pointer;transition:.2s}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:2px 0;width:100%}.tabs::-webkit-scrollbar{display:none}
+.tabs button{min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;font:700 14px Rajdhani,system-ui;letter-spacing:.02em;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.2s}
 .tabs button.on{color:var(--bg);background:linear-gradient(90deg,var(--a1),var(--a3));border-color:transparent;box-shadow:0 0 14px var(--gl)}
 #sheet{position:fixed;inset:0;z-index:9;display:none;background:#000b;align-items:flex-end}
 #sheet.open{display:flex}
@@ -77,7 +77,7 @@ input:focus,select:focus{outline:0;border-color:var(--a1);box-shadow:0 0 8px var
 <script>
 var KEY='paisa-tracker-v1',Y=new Date().getFullYear(),MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
 CATS=['🍔 Food','🏠 Bills','⛽ Travel','🛒 Shopping','🎮 Fun','💊 Health','💳 EMI','📦 Other'],tab='home';
-var blank=()=>({opening:[],months:[],exp:[],sip:[],mf:[],st:[],gold:[],fds:[],goals:[],rec:[],debts:[],target:0,budget:0,goldRate:0,manualRate:0,premium:0,theme:'noir',lastBackup:''});
+var blank=()=>({opening:[],months:[],exp:[],sip:[],ins:[],mf:[],st:[],gold:[],fds:[],goals:[],rec:[],debts:[],target:0,budget:0,goldRate:0,manualRate:0,premium:0,theme:'noir',lastBackup:''});
 function migrate(d){var s=Object.assign(blank(),d);if(!d.months&&Array.isArray(d.salary))s.months=d.salary.map((v,m)=>({k:Y+'-'+String(m+1).padStart(2,'0'),salary:v||0,planned:(d.planned||[])[m]||0})).filter(x=>x.salary||x.planned);return s}
 function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&typeof d=='object')return migrate(d)}catch(e){}return blank()}
 var S=load(),OK=true;
@@ -99,7 +99,7 @@ active=o=>o.planned||0,
 yearSaved=()=>sum(S.months,o=>saved(o)),
 mlabel=k=>MO[+k.slice(5)-1]+' '+k.slice(0,4),
 cash=()=>sum(S.opening,x=>x.a)+yearSaved(),
-goldVal=()=>{var g=sum(S.gold,x=>x.g),r=S.manualRate>0?S.manualRate:(S.goldRate||0);return r>0?g*r:sum(S.gold,x=>x.g*x.r)},
+goldVal=()=>{var g=sum(S.gold,x=>x.g),r=S.goldRate||0;return r>0?g*r:sum(S.gold,x=>x.g*x.r)},
 fdVal=(f,at)=>{if(!f.r||!f.s)return f.a;var t=Math.max(0,(new Date(at)-new Date(f.s))/315576e5);return f.a*Math.pow(1+f.r/400,4*t)},
 fdNow=f=>fdVal(f,Math.min(Date.now(),new Date(f.m))),
 fdEnd=f=>fdVal(f,f.m);
@@ -107,10 +107,6 @@ function avgExp(){var a=S.months.map(o=>mExp(o.k)).filter(x=>x>0);return a.lengt
 
 var GOLDERR=false;
 function applyRec(){var ym=today().slice(0,7),ch=false;S.rec.forEach(r=>{if(r.last!==ym){S.exp.push({d:ym+'-'+String(r.day||1).padStart(2,'0'),c:r.c,n:r.n+' (auto)',a:r.a});r.last=ym;ch=true}});if(ch)save()}
-function goldApply(){var c=JSON.parse(localStorage.getItem('lv-gold')||'null');if(c&&c.g)S.goldRate=Math.round(c.g*(1+(S.premium||0)/100)*100)/100}
-async function fetchGold(force){var key=localStorage.getItem('lv-goldkey');if(!key)return;var c=JSON.parse(localStorage.getItem('lv-gold')||'null'),td=today();if(c&&c.d==td&&!force)return;
- try{var r=await fetch('https://www.goldapi.io/api/XAU/INR',{headers:{'x-access-token':key}});var j=await r.json();var g=j.price_gram_24k;if(!g)throw 0;localStorage.setItem('lv-gold',JSON.stringify({d:td,g:g}));GOLDERR=false;goldApply();save()}catch(e){GOLDERR=true}
- render()}
 function chart(){var L=[...S.months].sort((a,b)=>a.k<b.k?-1:1);if(!L.length)return '';var mx=Math.max(1,...L.map(o=>Math.max(o.planned||0,mExp(o.k)))),w=520/L.length;
  return `<h2>📊 Year at a glance</h2><div class="card pad"><svg viewBox="0 0 520 170" width="100%" role="img" aria-label="Savings and spending by month">${L.map((o,i)=>{var s=(o.planned||0)/mx*120,e=mExp(o.k)/mx*120,x=i*w+w*.12,bw=w*.34;return `<rect x="${x}" y="${140-s}" width="${bw}" height="${s}" rx="3" fill="var(--a1)"/><rect x="${x+bw+3}" y="${140-e}" width="${bw}" height="${e}" rx="3" fill="var(--a3)"/><text x="${x+bw+1.5}" y="158" font-size="11" fill="var(--mute)" text-anchor="middle">${MO[+o.k.slice(5)-1]}</text>`}).join('')}</svg><small><u style="color:var(--a1)">■</u> Savings &nbsp; <u style="color:var(--a3)">■</u> Spent</small></div>`}
 function debtBlock(){var owe=sum(S.debts.filter(d=>d.dir=='owe'),d=>Math.max(0,d.a-(d.p||0))),due=sum(S.debts.filter(d=>d.dir=='due'),d=>Math.max(0,d.a-(d.p||0)));
@@ -124,7 +120,7 @@ function downloadCSV(){var rows=[['Section','Date','Name','Category','Amount','E
  S.fds.forEach(f=>rows.push(['FD',f.m,f.n,'',f.a,(f.r||0)+'% from '+(f.s||'')]));
  S.mf.forEach(x=>rows.push(['Mutual fund','',x.n,'',x.c,'invested '+x.i]));
  S.st.forEach(x=>rows.push(['Stock','',x.n,'',x.c,'invested '+x.i]));
- S.gold.forEach(x=>rows.push(['Gold',x.d,x.g+' gm','',x.g*x.r,'@ '+x.r]));
+ S.gold.forEach(x=>rows.push(['Gold',x.d,x.g+' gm','',x.g*x.r*(1+(x.gst||0)/100),'@ '+x.r+' + GST '+(x.gst||0)+'%']));
  S.sip.forEach(x=>rows.push(['SIP','',x.n,'',x.a,'monthly']));
  S.debts.forEach(d=>rows.push(['Debt','',d.n,d.dir,d.a,'paid '+(d.p||0)]));
  var csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
@@ -200,17 +196,40 @@ function invest(){
  var g=sum(S.gold,x=>x.g),ga=sum(S.gold,x=>x.g*x.r),gv=goldVal();
  return `<h2>🔁 SIP tracker</h2><div class="card">${S.sip.length?S.sip.map((x,i)=>`<div class="row"><div class="grow">${esc(x.n)}</div><div class="amt">${inr(x.a)}</div>${del('sip',i)}</div>`).join(''):'<div class="empty">No SIPs yet.</div>'}<div class="row tot"><div class="grow">Per month</div><div class="amt">${inr(sum(S.sip,x=>x.a))}</div></div></div>
  <form data-k="sip"><input name="n" placeholder="Fund name" required><input name="a" type="number" step="any" placeholder="Monthly ₹" required><button class="btn">Add SIP</button></form>`
- +fdBlock()+hold('mf','📈 Mutual funds')+hold('st','📊 Stocks')+debtBlock()
- +`<h2>🪙 Gold ledger</h2><div class="card">${S.gold.length?S.gold.map((x,i)=>`<div class="row"><div class="grow">${x.g} gm @ ${inr(x.r)}<small>${esc(x.d)}</small></div><div class="amt">${inr(x.g*x.r)}</div>${del('gold',i)}</div>`).join(''):'<div class="empty">No gold bought yet.</div>'}
- <div class="row tot"><div class="grow">${+g.toFixed(3)} gm<small>Cost ${inr(ga)}</small></div><div class="r"><div class="amt">${inr(gv)}</div><small class="${cls(gv-ga)}">${pn(gv-ga,ga)}</small></div></div></div>
- <form data-k="gold"><input name="d" type="date" value="${today()}" required><input name="g" type="number" step="any" placeholder="Gold (gm)" required><input name="r" type="number" step="any" placeholder="Rate ₹/gm" required><button class="btn">Add</button></form>
- <div class="card pad" style="margin-top:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span>⚡ Live 24K rate per gm</span><b class="f">${(S.manualRate>0?S.manualRate:S.goldRate)?inr(S.manualRate>0?S.manualRate:S.goldRate):'—'}</b></div>
- <small>${S.manualRate>0?'Using your manual rate':(JSON.parse(localStorage.getItem('lv-gold')||'null')||{}).d?'Live 24K (999) rate on '+JSON.parse(localStorage.getItem('lv-gold')).d:'Add a GoldAPI key below to fetch the rate'}${GOLDERR?' · ⚠️ fetch failed, check key or internet':''}</small>
- <div style="display:flex;gap:8px;margin-top:8px"><button class="btn ghost" data-act="goldref">Refresh now</button></div>
- <input id="gkey" type="password" value="${localStorage.getItem('lv-goldkey')||''}" placeholder="GoldAPI key (free at goldapi.io)" style="width:100%;margin-top:8px">
- <input id="gprem" type="number" step="any" value="${S.premium||''}" placeholder="Jeweller premium / GST % (e.g. 3)" style="width:100%;margin-top:8px">
- <input id="gmatch" type="number" step="any" placeholder="Match jeweller's 24K rate today (auto %)" style="width:100%;margin-top:8px">
- <input id="grate" type="number" step="any" value="${S.manualRate||''}" placeholder="Manual override: jeweller 24K rate ₹/gm" style="width:100%;margin-top:8px"></div>`}
+ +insBlock()+fdBlock()+hold('mf','📈 Mutual funds')+hold('st','📊 Stocks')+debtBlock()
+ +goldBlock()}
+
+function goldBlock(){var T0=today(),base=sum(S.gold,x=>x.g*x.r),gst=sum(S.gold,x=>x.g*x.r*(x.gst||0)/100),g=sum(S.gold,x=>x.g),cost=base+gst,gv=goldVal();
+ return `<h2>🪙 Gold ledger</h2><div class="card">${S.gold.length?S.gold.map((x,i)=>{var b=x.g*x.r,t=b*(x.gst||0)/100;return `<div class="row"><div class="grow">${x.g} gm @ ${inr(x.r)}<small>${esc(x.d)} · Base ${inr(b)} + GST ${x.gst||0}% ${inr(t)}</small></div><div class="amt">${inr(b+t)}</div>${del('gold',i)}</div>`}).join(''):'<div class="empty">No gold bought yet.</div>'}
+ <div class="row tot"><div class="grow">${+g.toFixed(3)} gm<small>Cost incl. GST ${inr(cost)} · GST ${inr(gst)}</small></div><div class="r"><div class="amt">${inr(gv)}</div><small class="${cls(gv-cost)}">${pn(gv-cost,cost)}</small></div></div></div>
+ <form data-k="gold"><input name="d" type="date" value="${T0}" required><input name="g" type="number" step="any" placeholder="Gold (gm)" required><input name="r" type="number" step="any" placeholder="Rate ₹/gm" required><input name="gst" type="number" step="any" value="3" placeholder="GST %"><button class="btn">Add</button></form>
+ <div class="card pad" style="margin-top:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span>🪙 Today's 24K rate per gm</span><b class="f">${S.goldRate?inr(S.goldRate):'—'}</b></div>
+ <input id="grate" type="number" step="any" value="${S.goldRate||''}" placeholder="Enter today's rate ₹/gm" style="width:100%;margin-top:8px"><small>Type today's rate and the gold value above updates.</small></div>`}
+
+function addYear(d){var x=new Date(d+'T00:00:00');x.setFullYear(x.getFullYear()+1);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
+var FQ={yearly:['Yearly',12],half:['Half-yearly',6],quarterly:['Quarterly',3],monthly:['Monthly',1]};
+function addMo(d,m){var x=new Date(d+'T00:00:00');x.setMonth(x.getMonth()+m);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
+function insBlock(){
+ var T0=today(),L=S.ins.map((p,i)=>[p,i]),paidYr=sum(S.ins,p=>sum(p.pay.filter(x=>x.d.startsWith(Y)),x=>x.a));
+ return `<h2>🛡️ Insurance (LIC)</h2>`
+ +(L.length?L.map(([p,i])=>{
+   var fk=p.f||'yearly',f=FQ[fk],last=p.pay.map(x=>x.d).sort().pop(),due=last?addMo(last,f[1]):T0,
+   dd=Math.round((new Date(due+'T00:00:00')-new Date(T0+'T00:00:00'))/864e5),
+   st=dd<0?`<small class="n">⚠️ Overdue by ${-dd} day${-dd==1?'':'s'}</small>`:dd<=30?`<small style="color:var(--go)">⏳ Due in ${dd} day${dd==1?'':'s'} · ${due}</small>`:`<small class="p">✅ Next due ${due}</small>`,
+   paid=sum(p.pay.filter(x=>x.d.startsWith(Y)),x=>x.a),
+   hist=p.pay.map((x,j)=>[x,j]).sort((a,b)=>a[0].d<b[0].d?1:-1).slice(0,8);
+   return `<div class="card pad" style="margin-bottom:10px">
+   <div class="hr"><div class="grow"><b class="f" style="font-size:16px">${esc(p.n)}</b><small style="display:block">${inr(p.p)} ${f[0].toLowerCase()} · ≈ ${inr(p.p*12/f[1])}/yr${p.sa?' · Sum assured '+inr(p.sa):''}${p.m?' · Matures '+esc(p.m):''}</small></div>
+   <select data-fq="${i}" style="flex:none;width:auto;padding:6px 8px;font-size:14px">${Object.keys(FQ).map(k=>`<option value="${k}"${fk==k?' selected':''}>${FQ[k][0]}</option>`).join('')}</select>${del('ins',i)}</div>
+   <div style="margin-top:6px">${st}</div>
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px"><small>Paid ${Y}: <b class="p">${inr(paid)}</b> · Total ${inr(sum(p.pay,x=>x.a))}</small><button class="btn" data-act="paynow" data-i="${i}">✅ Paid today</button></div>
+   <form data-k="inspay" style="margin-top:8px"><input type="hidden" name="i" value="${i}"><input name="d" type="date" value="${T0}" required><input name="a" type="number" step="any" value="${p.p}" required><button class="btn">Add payment</button></form>
+   ${hist.length?`<div style="margin-top:8px">${hist.map(([x,j])=>`<div class="row" style="padding:6px 0"><div class="grow"><small>${esc(x.d)}</small></div><div class="amt">${inr(x.a)}</div><button class="x" data-act="delpay" data-i="${i}" data-j="${j}" aria-label="Remove payment">×</button></div>`).join('')}</div>`:''}
+   </div>`}).join(''):'<div class="card pad empty">No policy added yet.</div>')
+ +`<div class="tiles" style="margin:10px 0 0"><div class="tile"><small>📆 Premium paid ${Y}</small><b class="f">${inr(paidYr)}</b></div></div>`
+ +`<form data-k="ins"><input name="n" placeholder="Policy name (e.g. Jeevan Lakshya)" required><input name="p" type="number" step="any" placeholder="Premium per payment ₹" required><select name="f">${Object.keys(FQ).map(k=>`<option value="${k}">${FQ[k][0]}</option>`).join('')}</select><input name="sa" type="number" step="any" placeholder="Sum assured ₹ (optional)"><label class="lb">Maturity date (optional)<input name="m" type="date"></label><button class="btn">Add policy</button></form>
+ <p class="mute" style="margin:6px 0 0">Add payments by hand with their date, or tap "Paid today". Next due is counted from the last payment using the frequency. Premiums do not change your savings.</p>`;
+}
 
 var T=[['home','🏠','Base'],['months','📅','Months'],['spend','💸','Spend'],['invest','📈','Invest']];
 function header(){return `<div class="top"><div class="tl"><div>🎮 LOOT <span>VAULT</span></div><button class="qa" data-act="fab" aria-label="Quick add expense">＋</button></div>
@@ -226,27 +245,27 @@ function sheet(o){var s=document.getElementById('sheet');if(o)s.firstElementChil
 document.addEventListener('submit',ev=>{var f=ev.target,k=f.dataset.k;if(!k)return;ev.preventDefault();var v=Object.fromEntries(new FormData(f));
  if(k=='opening'||k=='sip')S[k].push({n:v.n.trim(),a:+v.a});
  if(k=='exp')S.exp.push({d:v.d,c:v.c,n:v.n.trim(),a:+v.a});
- if(k=='gold')S.gold.push({d:v.d,g:+v.g,r:+v.r});
+ if(k=='gold')S.gold.push({d:v.d,g:+v.g,r:+v.r,gst:+v.gst||0});
  if(k=='mf'||k=='st')S[k].push({n:v.n.trim(),i:+v.i,c:v.c===''||v.c==null?+v.i:+v.c});
  if(k=='months'&&!S.months.some(o=>o.k==v.k)){var prev=[...S.months].sort((a,b)=>a.k<b.k?1:-1)[0];S.months.push({k:v.k,salary:prev?prev.salary:0,planned:prev?prev.planned:0})}
  if(k=='rec'){S.rec.push({n:v.n.trim(),c:v.c,a:+v.a,day:+v.day||1,last:''});applyRec()}
  if(k=='debts')S.debts.push({n:v.n.trim(),a:+v.a,p:0,dir:v.dir});
  if(k=='fds')S.fds.push({n:v.n.trim(),a:+v.a,r:+v.r||0,s:v.s,m:v.m});
+ if(k=='ins')S.ins.push({n:v.n.trim(),p:+v.p,f:v.f||'yearly',sa:+v.sa||0,m:v.m||'',pay:[]});
+ if(k=='inspay')S.ins[+v.i].pay.push({d:v.d,a:+v.a});
  if(k=='goals')S.goals.push({n:v.n.trim(),t:+v.t||1,s:0});
  save();sheet(false);render()});
 
 document.addEventListener('change',ev=>{var t=ev.target,d=t.dataset,v=+t.value||0;
- if(d.sal!==undefined)S.months[+d.sal].salary=v;
+ if(d.fq!==undefined)S.ins[+d.fq].f=t.value;
+ else if(d.sal!==undefined)S.months[+d.sal].salary=v;
  else if(d.plan!==undefined)S.months[+d.plan].planned=v;
  else if(d.cv){var p=d.cv.split(',');S[p[0]][+p[1]].c=v}
  else if(d.gs!==undefined)S.goals[+d.gs].s=v;
  else if(t.id=='target')S.target=v;
  else if(t.id=='bud')S.budget=v;
  else if(d.dp!==undefined)S.debts[+d.dp].p=v;
- else if(t.id=='grate')S.manualRate=v;
- else if(t.id=='gprem'){S.premium=v;goldApply()}
- else if(t.id=='gmatch'){var c=JSON.parse(localStorage.getItem('lv-gold')||'null');if(c&&c.g&&v>0){S.premium=Math.round((v/c.g-1)*10000)/100;S.manualRate=0;goldApply()}else{alert('Pehle GoldAPI key daal, phir match karo')}}
- else if(t.id=='gkey'){localStorage.setItem('lv-goldkey',t.value.trim());fetchGold(true);return}
+ else if(t.id=='grate')S.goldRate=v;
  else if(t.id=='file'&&t.files[0]){var r=new FileReader();r.onload=()=>{try{var x=JSON.parse(r.result);if(!x||!Array.isArray(x.exp))throw 0;S=migrate(x);save();render();alert('Backup restored ✅')}catch(e){alert('Not a valid backup file.')}};r.readAsText(t.files[0]);return}
  else return;
  save();render()});
@@ -257,13 +276,14 @@ document.addEventListener('click',ev=>{if(ev.target.id=='sheet')return sheet(fal
  if(a=='theme'){S.theme=b.dataset.t;save();render()}
  if(a=='del'&&confirm('Delete this entry?')){S[b.dataset.k].splice(+b.dataset.i,1);save();render()}
  if(a=='export'){S.lastBackup=today();save();var u=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'})),l=document.createElement('a');l.href=u;l.download='loot-vault-backup-'+today()+'.json';l.click();setTimeout(()=>URL.revokeObjectURL(u),1000);render()}
+ if(a=='paynow'){var p=S.ins[+b.dataset.i];if(p.pay.some(x=>x.d==today())&&!confirm('Aaj ka premium pehle hi daal chuka hai. Phir se add karu?'))return;p.pay.push({d:today(),a:p.p});save();render()}
+ if(a=='delpay'&&confirm('Ye payment entry hatau?')){S.ins[+b.dataset.i].pay.splice(+b.dataset.j,1);save();render()}
  if(a=='import')document.getElementById('file').click();
- if(a=='csv')downloadCSV();
- if(a=='goldref')fetchGold(true)});
+ if(a=='csv')downloadCSV()});
 
 var tx,ty;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
 document.addEventListener('touchend',e=>{var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty,L=T.map(t=>t[0]),j=L.indexOf(tab)+(dx<0?1:-1);
  if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||Math.abs(dx)<80||Math.abs(dy)>60||document.getElementById('sheet').classList.contains('open'))return;if(L[j])go(L[j])},{passive:true});
-applyRec();goldApply();render();if(localStorage.getItem('lv-goldkey'))fetchGold(false);
+applyRec();render();
 </script></body></html>
