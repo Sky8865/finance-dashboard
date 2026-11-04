@@ -126,7 +126,8 @@ function getM(k){return S.months.find(o=>o.k==k)||{k:k,salary:0,planned:0,budget
 function ensureM(k){var o=S.months.find(x=>x.k==k);if(!o){o={k:k,salary:0,planned:0,budget:0};S.months.push(o)}return o}
 function isClosed(k){return S.closed.indexOf(k)>-1}
 function mExp(k){return sum(S.exp.filter(e=>e.d.slice(0,7)==k),e=>e.a)}
-function actual(k){return (getM(k).planned||0)-mExp(k)}
+function mOut(k){return getM(k).mexp||0}
+function actual(k){return (getM(k).planned||0)-mOut(k)}
 function savedToDate(){return sum(allKeys().filter(k=>k<=CUR()),actual)}
 function openingSum(){return sum(S.opening,x=>x.a)}
 function goldVal(){var g=sum(S.gold,x=>x.g),incl=(S.goldRate||0)*(1+(S.goldGst==null?3:S.goldGst)/100);return incl>0?g*incl:sum(S.gold,x=>x.g*x.r*(1+(x.gst||0)/100))}
@@ -149,7 +150,7 @@ var SCH={
  rec:[['n','text','Name'],['c','cat','Category'],['a','num','Amount ₹'],['day','num','Day of month']],
  debts:[['n','text','Name'],['dir','dir','Direction'],['a','num','Amount ₹']],
  pay:[['d','date','Date'],['a','num','Amount ₹']],
- months:[['salary','num','Salary ₹'],['planned','num','Planned savings ₹'],['budget','num','Monthly budget ₹']]
+ months:[['salary','num','Salary ₹'],['planned','num','Planned savings ₹'],['mexp','num','Emergency expense (from savings) ₹'],['budget','num','Monthly budget ₹']]
 };
 function fld(n,t,l,v){var val=v==null?'':v;
  if(t=='cat')return `<label class="lb">${l}<select name="${n}">${CATS.map(c=>`<option${c==val?' selected':''}>${c}</option>`).join('')}</select></label>`;
@@ -205,25 +206,24 @@ function home(){
  <p class="mute">Last backup: ${S.lastBackup?fmtD(S.lastBackup):'never'}. Data stays only in this browser on this phone.</p><input type="file" id="file" accept="application/json" hidden>`}
 
 function chartBlock(){var ks=allKeys().filter(k=>k.slice(0,4)==String(Y));
- var mx=Math.max(1,...ks.map(k=>Math.max(getM(k).planned||0,mExp(k)))),w=520/12;
- return `<h2>📊 ${Y} at a glance</h2><div class="card pad"><svg viewBox="0 0 520 170" width="100%" role="img" aria-label="Savings and spending by month">${MO.map((n,m)=>{var k=Y+'-'+String(m+1).padStart(2,'0'),o=getM(k),s=(o.planned||0)/mx*120,e=mExp(k)/mx*120,x=m*w+w*.12,bw=w*.34;return `<rect x="${x}" y="${140-s}" width="${bw}" height="${s}" rx="3" fill="var(--a1)"/><rect x="${x+bw+3}" y="${140-e}" width="${bw}" height="${e}" rx="3" fill="var(--a3)"/><text x="${x+bw+1.5}" y="158" font-size="11" fill="var(--mute)" text-anchor="middle">${n}</text>`}).join('')}</svg><small><u style="color:var(--a1)">■</u> Planned savings &nbsp; <u style="color:var(--a3)">■</u> Spent</small></div>`}
+ var mx=Math.max(1,...ks.map(k=>Math.max(getM(k).planned||0,mOut(k)))),w=520/12;
+ return `<h2>📊 ${Y} at a glance</h2><div class="card pad"><svg viewBox="0 0 520 170" width="100%" role="img" aria-label="Savings and spending by month">${MO.map((n,m)=>{var k=Y+'-'+String(m+1).padStart(2,'0'),o=getM(k),s=(o.planned||0)/mx*120,e=mOut(k)/mx*120,x=m*w+w*.12,bw=w*.34;return `<rect x="${x}" y="${140-s}" width="${bw}" height="${s}" rx="3" fill="var(--a1)"/><rect x="${x+bw+3}" y="${140-e}" width="${bw}" height="${e}" rx="3" fill="var(--a3)"/><text x="${x+bw+1.5}" y="158" font-size="11" fill="var(--mute)" text-anchor="middle">${n}</text>`}).join('')}</svg><small><u style="color:var(--a1)">■</u> Planned savings &nbsp; <u style="color:var(--a3)">■</u> Emergency use</small></div>`}
 
 function months(){
- var keys=allKeys().slice().reverse(),cnt=keys.length,sal=sum(keys,k=>getM(k).salary||0),spt=sum(keys,mExp),sv=sum(keys,actual);
- var pend=allKeys().filter(k=>k<CUR()&&!isClosed(k)&&(mExp(k)>0||getM(k).planned>0));
+ var keys=allKeys().slice().reverse(),cnt=keys.length,sal=sum(keys,k=>getM(k).salary||0),used=sum(keys,mOut),sv=sum(keys,actual);
+ var pend=allKeys().filter(k=>k<CUR()&&!isClosed(k)&&(mOut(k)>0||getM(k).planned>0));
  return chartBlock()
  +(pend.length?`<div class="warn">📅 <b>${mlabel(pend[0])}</b> khatam ho gaya? Use band karo taaki us me koi change na ho. <div style="margin-top:8px"><button class="btn" data-act="closem" data-i="${pend[0]}">🔒 Close ${mlabel(pend[0])}</button></div></div>`:'')
  +`<h2>📅 Salary & savings</h2>
  <form data-k="months" style="margin:0 0 4px"><input name="k" type="month" value="${CUR()}" required><button class="btn">+ Add month</button></form>
- <div class="tiles"><div class="tile"><span class="corner">${cnt} mo</span><small>💼 Salary</small><b class="f">${inr(sal)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>💸 Spent</small><b class="f">${inr(spt)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>💎 Saved (actual)</small><b class="f ${cls(sv)}">${inr(sv)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>📊 Saving rate</small><b class="f">${sal?(sv/sal*100).toFixed(0):0}%</b></div></div>
+ <div class="tiles"><div class="tile"><span class="corner">${cnt} mo</span><small>💼 Salary</small><b class="f">${inr(sal)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>💸 Emergency use</small><b class="f">${inr(used)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>💎 Actual savings</small><b class="f ${cls(sv)}">${inr(sv)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>📊 Saving rate</small><b class="f">${sal?(sv/sal*100).toFixed(0):0}%</b></div></div>
  <div style="height:12px"></div>`
- +keys.map(k=>{var o=getM(k),cl=isClosed(k),e=mExp(k),ac=(o.planned||0)-e,bd=o.budget||0,over=bd>0&&e>bd;
+ +keys.map(k=>{var o=getM(k),cl=isClosed(k),u=mOut(k),ac=(o.planned||0)-u;
  return `<div class="card mc ${cl?'lock':''}"><div class="h"><b>${mlabel(k)}</b><span class="badge">${cl?'🔒 Closed':'🟢 Open'}</span></div>
  <div class="g2"><label>💼 Salary<input data-sal="${k}" type="number" inputmode="decimal" step="any" value="${o.salary||''}" placeholder="0" ${cl?'disabled':''}></label><label>🎯 Planned savings<input data-plan="${k}" type="number" inputmode="decimal" step="any" value="${o.planned||''}" placeholder="0" ${cl?'disabled':''}></label></div>
- <div class="kv"><div><small>💸 Expense (from Spend)</small><b>${inr(e)}</b></div><div><small>💎 Actual savings</small><b class="${cls(ac)}">${inr(ac)}</b></div></div>
- ${over?`<div class="warn">⚠️ Budget se <b>${inr(e-bd)}</b> zyada kharch hua (budget ${inr(bd)})</div>`:''}
+ <div class="g2"><label>💸 Emergency expense (from savings)<input data-mex="${k}" type="number" inputmode="decimal" step="any" value="${o.mexp||''}" placeholder="0" ${cl?'disabled':''}></label><div class="kv" style="margin:0"><div><small>💎 Actual savings</small><b class="${cls(ac)}">${inr(ac)}</b></div></div></div>
  <div class="acts"><button data-act="edit" data-k="months" data-i="${k}">✏️ Edit</button>${cl?`<button data-act="reopen" data-i="${k}">🔓 Reopen</button>`:`<button data-act="closem" data-i="${k}">🔒 Close month</button>`}<button data-act="delm" data-i="${k}">🗑 Clear</button></div></div>`}).join('')
- +'<p class="mute">Actual savings = Planned savings − Expenses. Net worth me current month tak ki actual savings jaati hai. Closed month change nahi hota.</p>'}
+ +'<p class="mute">Actual savings = Planned savings − Emergency expense (jo yahan daala). Spend tab ke kharche yahan nahi judte. Net worth me current month tak ki actual savings jaati hai.</p>'}
 
 function recBlock(){return `<h2>🔁 Recurring expenses</h2><div class="card">${S.rec.length?S.rec.map((r,i)=>`<div class="row"><div class="grow">${esc(r.n)}<small>${esc(r.c)} · every month, day ${r.day}</small></div><div class="amt">${inr(r.a)}</div>${del('rec',i)}</div>`).join(''):'<div class="empty">Rent, EMI, subscriptions: add once, auto every month.</div>'}</div>
  <form data-k="rec"><input name="n" placeholder="Name (Rent, EMI…)" required><select name="c">${CATS.map(c=>`<option>${c}</option>`).join('')}</select><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><input name="day" type="number" inputmode="numeric" min="1" max="28" placeholder="Day (1–28)"><button class="btn">Add</button></form>`}
@@ -332,6 +332,7 @@ document.addEventListener('change',ev=>{var t=ev.target,d=t.dataset,v=+t.value||
  if(d.fq!==undefined)S.ins[+d.fq].f=t.value;
  else if(d.sal!==undefined){if(isClosed(d.sal))return;ensureM(d.sal).salary=v}
  else if(d.plan!==undefined){if(isClosed(d.plan))return;ensureM(d.plan).planned=v}
+ else if(d.mex!==undefined){if(isClosed(d.mex))return;ensureM(d.mex).mexp=v}
  else if(t.id=='bud'){if(isClosed(selM||CUR()))return;ensureM(selM||CUR()).budget=v}
  else if(d.cv){var p=d.cv.split(',');S[p[0]][+p[1]].c=v}
  else if(d.gs!==undefined)S.goals[+d.gs].s=v;
@@ -366,7 +367,7 @@ document.addEventListener('click',ev=>{if(ev.target.id=='sheet')return sheet(fal
 function dl(txt,name,type){var u=URL.createObjectURL(new Blob([txt],{type:type})),l=document.createElement('a');l.href=u;l.download=name;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function downloadCSV(){var rows=[['Section','Date','Name','Category','Amount','Extra']];
  S.exp.forEach(e=>rows.push(['Expense',e.d,e.n,e.c||'',e.a,'']));
- allKeys().forEach(k=>{var o=getM(k);rows.push(['Month',k,'Salary','',o.salary||0,'']);rows.push(['Month',k,'Planned savings','',o.planned||0,'']);rows.push(['Month',k,'Actual savings','',actual(k),'Budget '+(o.budget||0)+(isClosed(k)?' (closed)':'')])});
+ allKeys().forEach(k=>{var o=getM(k);rows.push(['Month',k,'Salary','',o.salary||0,'']);rows.push(['Month',k,'Planned savings','',o.planned||0,'']);rows.push(['Month',k,'Emergency expense','',o.mexp||0,'']);rows.push(['Month',k,'Actual savings','',actual(k),'Budget '+(o.budget||0)+(isClosed(k)?' (closed)':'')])});
  S.ins.forEach(p=>p.pay.forEach(x=>rows.push(['Insurance',x.d,p.n,'',x.a,p.f||'yearly'])));
  S.fds.forEach(f=>rows.push(['FD',f.m,f.n,'',f.a,(f.r||0)+'% from '+(f.s||'')]));
  S.mf.forEach(x=>rows.push(['Mutual fund','',x.n,'',x.c,'invested '+x.i]));
