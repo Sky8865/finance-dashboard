@@ -1,104 +1,146 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#09090b">
+<meta name="theme-color" content="#0a0908">
 <title>Loot Vault</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#09090b;--card:#131215;--line:#2b2619;--ink:#f3ead8;--mute:#9a8f78;--a1:#e3b84a;--a2:#b8862b;--a3:#d2792f;--hero:#1e1810;--gl:#e3b84a30;--gr:#8fe388;--rd:#ff5d5d;--go:#ffd23f;color-scheme:dark}
-html[data-t=emerald]{--bg:#06100d;--card:#0d1b17;--line:#1f3a31;--ink:#e6f5ee;--mute:#7fa394;--a1:#3ddc97;--a2:#1f9d6b;--a3:#c6e84a;--hero:#0f2a21;--gl:#3ddc9730}
-html[data-t=royal]{--bg:#0a0614;--card:#140d2b;--line:#2d1f5e;--ink:#eae6ff;--mute:#8f86b8;--a1:#22e4ff;--a2:#8b5cf6;--a3:#ff2e97;--hero:#271456;--gl:#8b5cf655;--gr:#a3ff3c}
-html[data-t=crimson]{--bg:#0d0708;--card:#1a0e10;--line:#3a1b20;--ink:#f6e8e9;--mute:#a58389;--a1:#ff5a6a;--a2:#b3202f;--a3:#ff9a5a;--hero:#2c0f14;--gl:#ff5a6a30}
+:root{--bg:#0a0908;--card:#16140f;--card2:#1e1b14;--line:#2e2715;--ink:#f6efdf;--mute:#9d917a;--a1:#f2c14e;--a2:#b8862b;--a3:#e0823a;--hero:#231d11;--gl:#f2c14e33;--gr:#8fd8ff;--rd:#ff6b6b;--go:#ffd66b;color-scheme:dark}
+html[data-t=ocean]{--bg:#050b14;--card:#0c1624;--card2:#112033;--line:#1c3350;--ink:#e8f1ff;--mute:#7f96b2;--a1:#48cfff;--a2:#1e6fd9;--a3:#7ee8fa;--hero:#0d2238;--gl:#48cfff33}
+html[data-t=sunset]{--bg:#0f0708;--card:#1d1012;--card2:#281619;--line:#3f2226;--ink:#fff1ea;--mute:#b89a92;--a1:#ff9e4a;--a2:#ff4d6d;--a3:#ffd166;--hero:#2e1518;--gl:#ff9e4a33}
+html[data-t=rose]{--bg:#100709;--card:#1e0f16;--card2:#2a1520;--line:#42222f;--ink:#ffeef4;--mute:#bd96a6;--a1:#ff6fa3;--a2:#d63a7a;--a3:#ffb3cc;--hero:#2f1421;--gl:#ff6fa333}
+html[data-t=slate]{--bg:#0b0d10;--card:#13171c;--card2:#1a2028;--line:#283140;--ink:#eef2f7;--mute:#8d9aab;--a1:#c9d6e3;--a2:#6b7f96;--a3:#9fb4c7;--hero:#172030;--gl:#c9d6e333}
+html[data-t=crimson]{--bg:#0d0708;--card:#1b0f11;--card2:#241316;--line:#3a1b20;--ink:#f6e8e9;--mute:#a58389;--a1:#ff5a6a;--a2:#b3202f;--a3:#ff9a5a;--hero:#2c0f14;--gl:#ff5a6a33}
 *{box-sizing:border-box}html,body{margin:0}
-body{background:radial-gradient(800px 380px at 85% -8%,var(--gl),transparent),radial-gradient(600px 380px at -10% 8%,var(--gl),transparent),var(--bg);color:var(--ink);font:500 17px/1.4 Rajdhani,system-ui,-apple-system,sans-serif;padding:env(safe-area-inset-top,0) 0 calc(40px + env(safe-area-inset-bottom,0));font-variant-numeric:tabular-nums;min-height:100vh}
-main{max-width:560px;margin:0 auto;padding:14px;min-width:0}
-.f,h2,.big{font-family:Orbitron,system-ui,sans-serif}
-h2{font-size:13px;letter-spacing:.06em;margin:22px 0 10px;color:var(--a1);display:flex;align-items:center;gap:10px}
-h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
-small,.mute{color:var(--mute);font-size:13.5px}
-.card,.tile{background:linear-gradient(180deg,color-mix(in srgb,var(--card) 92%,#fff),var(--card));border:1px solid var(--line);border-radius:16px}
-.card{padding:4px 14px}.pad{padding:14px}
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.tile{position:relative;overflow:hidden;padding:12px 12px 12px 16px;min-width:0}
-.tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--a1),var(--a3))}
-.tile b{display:block;font-size:17px;margin-top:2px;word-break:break-word}
-.corner{position:absolute;top:9px;right:10px;font-size:11px;color:var(--mute);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:1px 7px}
-.hero{border:1px solid var(--a2);border-radius:18px;padding:16px;background:linear-gradient(135deg,var(--hero),var(--card));box-shadow:0 0 24px var(--gl)}
+body{background:radial-gradient(900px 420px at 90% -10%,var(--gl),transparent 60%),var(--bg);color:var(--ink);font:400 15px/1.45 Inter,system-ui,-apple-system,sans-serif;padding:env(safe-area-inset-top,0) 0 calc(130px + env(safe-area-inset-bottom,0));min-height:100vh;font-variant-numeric:tabular-nums}
+main{max-width:560px;margin:0 auto;padding:16px;min-width:0}
+.f,.big,.amt,.tl{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:600;letter-spacing:.2px}
+.big{font-size:32px;color:var(--a1);margin:4px 0 0;word-break:break-all;line-height:1.1}
+.sec{font:600 12px Inter,system-ui;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:26px 4px 10px;display:flex;justify-content:space-between;align-items:center}
+small,.mute,.lbl{color:var(--mute);font-size:13px}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:14px}
+.card+.card,.card+form,form+.card{margin-top:10px}
 .hr{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.big{font-size:30px;font-weight:800;color:var(--a1);text-shadow:0 0 14px var(--gl);margin:2px 0 4px;word-break:break-all}
-.ring{flex:none;width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--a1) var(--p),var(--line) 0);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero{background:linear-gradient(135deg,var(--hero),var(--card));border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 10px 30px #0006,inset 0 1px 0 #ffffff0d}
+.ring{flex:none;width:72px;height:72px;border-radius:50%;background:conic-gradient(var(--a1) var(--p),var(--line) 0);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .ring::before{content:"";position:absolute;inset:6px;background:var(--hero);border-radius:50%}
-.ring>*{position:relative;line-height:1}.ring b{font-size:24px;color:var(--a1)}.ring small{font-size:9px;margin-top:2px}
-.stack{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:14px 0 8px;background:var(--bg)}.stack i{display:block;height:100%}
-.leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--mute);margin-bottom:8px}.leg u{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
-.bar{height:11px;background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:8px 0}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--a2),var(--a1));box-shadow:0 0 10px var(--gl);transition:width .4s}
-.bar.pk i{background:linear-gradient(90deg,var(--a3),var(--go))}
-.bar.gr i{background:linear-gradient(90deg,#27c46b,var(--gr))}
+.ring>*{position:relative;line-height:1}.ring b{font-family:'Chakra Petch';font-size:22px;color:var(--a1)}.ring small{font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.stack{display:flex;height:8px;border-radius:6px;overflow:hidden;margin:16px 0 10px;background:var(--bg)}.stack i{display:block;height:100%}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--mute)}.leg u{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.tile{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;padding:12px 14px;position:relative;min-width:0}
+.tile b{display:block;font-family:'Chakra Petch';font-weight:600;font-size:18px;margin-top:4px;word-break:break-word}
+.tile .corner{position:absolute;top:10px;right:12px;font-size:11px;color:var(--mute)}
+.bar{height:8px;background:var(--bg);border-radius:8px;overflow:hidden;margin:12px 0 6px}
+.bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--a2),var(--a1));transition:width .5s}
+.bar.warn i{background:linear-gradient(90deg,var(--a3),var(--go))}
 .bar.bad i{background:var(--rd)}
-.bd{display:flex;flex-wrap:wrap;gap:8px}
-.bd span{padding:6px 11px;border-radius:20px;border:1px solid var(--line);font-size:14px;color:var(--mute);filter:grayscale(1);opacity:.55}
-.bd span.on{filter:none;opacity:1;color:var(--ink);border-color:var(--a1);box-shadow:0 0 10px var(--gl)}
-.row{display:flex;align-items:center;gap:6px;padding:10px 0;border-bottom:1px solid var(--line);min-width:0}
-.row:last-child{border-bottom:0}.grow{flex:1;min-width:0;word-break:break-word}.row small{display:block}
-.amt{font-weight:700;white-space:nowrap}.r{text-align:right}
-.p{color:var(--gr)}.n{color:var(--rd)}.tot{font-weight:700}
-.x{background:none;border:0;color:var(--mute);font-size:18px;padding:2px 5px;cursor:pointer;line-height:1}
+.bar.good i{background:linear-gradient(90deg,#2fb86a,var(--gr))}
+.row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);min-width:0}
+.row:last-child{border-bottom:0}
+.grow{flex:1;min-width:0;word-break:break-word}.grow b{font-weight:500}
+.row small{display:block;margin-top:1px}
+.ic{flex:none;width:36px;height:36px;border-radius:12px;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px}
+.amt{white-space:nowrap;font-size:16px}
+.p{color:var(--gr)}.n{color:var(--rd)}
+.pill{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--card2);border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.pill.g{color:var(--a1);background:var(--gl);border-color:transparent}
+.pill.r{color:var(--rd);background:#ff6b6b18;border-color:#ff6b6b40}
+.pill.a{color:var(--a1);background:var(--gl);border-color:transparent}
+.ico{background:none;border:0;color:var(--mute);width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;padding:0}
+.ico:hover{background:var(--card2);color:var(--ink)}
+.ico.d:hover{color:var(--rd)}
 form{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0;flex:1 1 90px;max-width:100%}
-input:focus,select:focus{outline:0;border-color:var(--a1);box-shadow:0 0 8px var(--gl)}
-input:disabled{opacity:.5}
-.btn{font:inherit;font-weight:700;background:linear-gradient(90deg,var(--a3),var(--a1));color:var(--bg);border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
-.btn:disabled{opacity:.5}
-.ghost{background:none;border:1px solid var(--line);color:var(--a1)}
-.cv{flex:none;width:110px;text-align:right;padding:7px 9px}
-.lb{flex:1 1 140px;font-size:13px;color:var(--mute);min-width:0}.lb input,.lb select{width:100%;margin-top:3px}
-.mc{padding:12px;margin-bottom:10px}
-.mc .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.badge{font-size:12px;border:1px solid var(--line);border-radius:10px;padding:2px 8px;color:var(--mute);white-space:nowrap}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
-.g2 label{font-size:13px;color:var(--mute);min-width:0}.g2 input{width:100%;margin-top:3px;padding:8px 10px}
-.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.kv>div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 10px;min-width:0}
-.kv b{display:block;font-size:17px;word-break:break-word}
-.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.acts button{background:none;border:1px solid var(--line);color:var(--a1);border-radius:10px;padding:6px 10px;font:600 14px Rajdhani,system-ui;cursor:pointer}
-.warn{border:1px solid var(--rd);background:color-mix(in srgb,var(--rd) 14%,transparent);color:var(--ink);border-radius:12px;padding:10px 12px;margin:10px 0;font-size:15px}
-.warn b{color:var(--rd)}
-.lock{opacity:.78}
-.cat{display:grid;grid-template-columns:90px 1fr 76px;gap:8px;align-items:center;font-size:15px;margin:6px 0}
-.cat .bar{margin:0}.cat span:last-child{text-align:right}
-.empty{color:var(--mute);padding:12px 0;font-size:15px}
-.sw{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);cursor:pointer}.sw.on{border-color:var(--ink);box-shadow:0 0 10px var(--gl)}
-.mpick{display:flex;gap:8px;align-items:center;margin:4px 0 12px}
-.mpick select{flex:1;font-family:Orbitron,system-ui;font-size:14px}
-.mpick button{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--a1);font-size:22px;cursor:pointer}
-.top{position:sticky;top:0;z-index:4;margin:-14px -14px 14px;padding:12px 14px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
-.tl{display:flex;justify-content:space-between;align-items:center;gap:10px;font:800 17px Orbitron,system-ui}
-.tl span{color:var(--a3)}
-.qa{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--a3),var(--a2));color:var(--bg);font:700 24px system-ui;line-height:1;box-shadow:0 0 14px var(--gl);cursor:pointer}
-.status{font:500 14px Rajdhani,system-ui;color:var(--mute)}
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:2px 0;width:100%}
-.tabs button{min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;font:700 14px Rajdhani,system-ui;letter-spacing:.02em;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.2s}
-.tabs button.on{color:var(--bg);background:linear-gradient(90deg,var(--a1),var(--a3));border-color:transparent;box-shadow:0 0 14px var(--gl)}
-.chart{display:grid}
-#sheet{position:fixed;inset:0;z-index:9;display:none;background:#000b;align-items:flex-end}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;height:44px;padding:0 12px;min-width:0;flex:1 1 110px;max-width:100%;font-size:15px}
+select{appearance:auto}
+input:focus,select:focus{outline:0;border-color:var(--a1);box-shadow:0 0 0 3px var(--gl)}
+input:disabled{opacity:.45}
+.btn{font:inherit;font-weight:600;height:44px;background:linear-gradient(90deg,var(--a3),var(--a1));color:#140e04;border:0;border-radius:12px;padding:0 18px;cursor:pointer;flex:0 0 auto}
+.btn.ghost{background:var(--card2);color:var(--a1);border:1px solid var(--line)}
+.btn:disabled{opacity:.45}
+.link{background:none;border:0;color:var(--a1);font:500 14px Inter,system-ui;padding:6px 0;cursor:pointer}
+.lb{flex:1 1 130px;font-size:12.5px;color:var(--mute);min-width:0;display:flex;flex-direction:column;gap:5px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.fields2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;align-items:end}
+.fields2 label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--mute);min-width:0}
+.fields2 input,.fields input{width:100%}
+.cv{flex:none;width:110px;text-align:right;height:38px}
+.mc{margin-bottom:10px}
+.mh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mh b{font-family:'Chakra Petch';font-weight:600;font-size:18px}
+.acts{display:flex;justify-content:flex-end;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{background:var(--card);border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:7px 14px;font:500 14px Inter,system-ui;cursor:pointer}
+.chip.on{background:linear-gradient(90deg,var(--a1),var(--a3));color:#140e04;border-color:transparent;font-weight:600}
+.empty{color:var(--mute);padding:14px 2px;font-size:14px}
+.summary{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.summary .s small{display:block}
+.summary .s b{font-family:'Chakra Petch';font-weight:600;font-size:17px}
+.warnbox{background:#ff6b6b14;border:1px solid #ff6b6b55;color:var(--ink);border-radius:14px;padding:11px 13px;margin-top:12px;font-size:14px}
+.warnbox b{color:var(--rd)}
+.infobox{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-top:12px;font-size:14px}
+.lock{opacity:.7}
+.mpick{display:flex;gap:8px;align-items:center;margin:6px 0 14px}
+.mpick select{flex:1;font-weight:600}
+.mpick button{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--a1);font-size:20px;cursor:pointer}
+.dayh{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:14px 0 2px}
+.dayh:first-child{margin-top:4px}
+.ach{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ach button{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 6px;color:var(--ink);cursor:pointer;font:500 12.5px Inter,system-ui;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.ach button span.e{font-size:24px;filter:grayscale(1);opacity:.35}
+.ach button.on span.e{filter:none;opacity:1}
+.ach button.on{border-color:var(--a1);box-shadow:0 0 16px var(--gl)}
+.ach button.sel{outline:2px solid var(--a1);outline-offset:1px}
+.ach button:not(.on){color:var(--mute)}
+.achd{margin-top:10px}
+.swatch{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);cursor:pointer}
+.swatch.on{border-color:var(--ink);box-shadow:0 0 0 3px var(--gl)}
+.sets{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+#sheet{position:fixed;inset:0;z-index:9;display:none;background:#000a;align-items:flex-end}
 #sheet.open{display:flex}
-#sheet>div{width:100%;max-height:88vh;overflow:auto;max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0));animation:up .25s ease}
+#sheet>div{width:100%;max-height:88vh;overflow:auto;max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:24px 24px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0));animation:up .25s ease}
+#sheet h2{font:600 17px 'Chakra Petch';margin:0 0 10px}
 @keyframes up{from{transform:translateY(40px);opacity:0}}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(90px);background:var(--card);border:1px solid var(--a1);color:var(--ink);padding:10px 16px;border-radius:14px;box-shadow:0 8px 24px #000a;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(90px);background:var(--card2);border:1px solid var(--line);color:var(--ink);padding:11px 18px;border-radius:14px;box-shadow:0 10px 30px #000b;opacity:0;transition:.3s;z-index:20;max-width:88%;text-align:center;font-size:14px}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-.in{animation:fade .25s ease}@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.top{position:sticky;top:0;z-index:4;margin:-16px -16px 16px;padding:14px 16px 12px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.tl{display:flex;justify-content:space-between;align-items:center;font-size:18px}
+.tl span{color:var(--a1)}
+.qa{flex:none;width:40px;height:40px;border-radius:12px;border:0;background:linear-gradient(135deg,var(--a3),var(--a1));color:#140e04;font:600 22px Inter,system-ui;line-height:1;cursor:pointer}
+.status{font-size:12.5px;color:var(--mute)}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tabs button{min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;font:500 14px Inter,system-ui;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;height:40px;padding:0 6px;cursor:pointer;white-space:nowrap;overflow:hidden;transition:.2s}
+.tabs button.on{color:#140e04;background:linear-gradient(90deg,var(--a1),var(--a3));border-color:transparent;font-weight:600}
+.tabs button span{font-size:15px}
+.fade{animation:fade .3s ease}@keyframes fade{from{opacity:0;transform:translateY(6px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.tlbl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+.tic{width:28px;height:28px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;background:var(--card);border:1px solid var(--line);flex:none}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stats3 .lbl{font-size:11px}.stats3 b{display:block;font-family:'Chakra Petch';font-weight:600;font-size:16px;margin-top:3px;word-break:break-word}
+.nm{font-weight:600;font-size:15px;line-height:1.3;word-break:break-word}
+.mt{font-size:12.5px;color:var(--mute);margin-top:3px;line-height:1.35}
+.rt{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0));width:min(94%,430px);display:flex;gap:6px;padding:7px;background:color-mix(in srgb,var(--card2) 86%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:28px;box-shadow:0 18px 44px #000d,0 0 0 1px #ffffff0a;z-index:6}
+.dock button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:0;color:var(--mute);height:58px;border-radius:21px;font:600 12px Inter,system-ui;cursor:pointer;transition:.25s}
+.dock .di{font-size:21px;line-height:1;transition:transform .25s}
+.dock button.on{background:linear-gradient(135deg,var(--a1),var(--a3));color:#140e04;box-shadow:0 8px 22px var(--gl)}
+.dock button.on .di{transform:translateY(-1px) scale(1.08)}
+.dock button:active{transform:scale(.96)}
 </style></head>
 <body><main id="app"></main><div id="sheet"><div></div></div><div id="toast"></div>
 <script>
+var ICO_EDIT='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',
+ICO_DEL='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>';
 var KEY='paisa-tracker-v1',Y=new Date().getFullYear(),MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-CATS=['🍔 Food','🏠 Bills','⛽ Travel','🛒 Shopping','🎮 Fun','💊 Health','💳 EMI','📦 Other'],
+CATS=[['Food','🍔'],['Groceries','🛒'],['Bills','💡'],['Rent','🏠'],['Travel','✈️'],['Fuel','⛽'],['Shopping','🛍️'],['Fun & Games','🎮'],['Splitwise','🧾'],['Health','💊'],['EMI','💳'],['Other','📦']],
+FIXED=['Rent','Splitwise'],
 FQ={yearly:['Yearly',12],half:['Half-yearly',6],quarterly:['Quarterly',3],monthly:['Monthly',1]},
-tab='home',selM=null;
+THEMES=[['noir','#f2c14e','Gold'],['ocean','#48cfff','Ocean'],['crimson','#ff5a6a','Crimson'],['sunset','#ff9e4a','Sunset'],['rose','#ff6fa3','Rose'],['slate','#c9d6e3','Slate']],
+tab='home',sub='mf',selM=null,achSel=-1;
 
-var blank=()=>({opening:[],months:[],closed:[],exp:[],rec:[],sip:[],mf:[],st:[],gold:[],fds:[],ins:[],goals:[],debts:[],target:0,reserve:100000,goldRate:0,goldGst:3,theme:'noir',lastBackup:''});
+var blank=()=>({opening:[],months:[],closed:[],exp:[],rec:[],sip:[],mf:[],st:[],gold:[],fds:[],ins:[],goals:[],debts:[],target:0,reserve:100000,goalName:'Main goal',goldRate:0,goldGst:3,theme:'noir',lastBackup:''});
 function migrate(d){var s=Object.assign(blank(),d);if(!d.months&&Array.isArray(d.salary))s.months=d.salary.map((v,m)=>({k:Y+'-'+String(m+1).padStart(2,'0'),salary:v||0,planned:(d.planned||[])[m]||0,budget:0})).filter(x=>x.salary||x.planned);s.closed=s.closed||[];return s}
 function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&typeof d=='object')return migrate(d)}catch(e){}return blank()}
 var S=load(),OK=true;
@@ -111,277 +153,375 @@ esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&
 sum=(a,f)=>a.reduce((t,x)=>t+(f?f(x):x),0),
 clamp=p=>Math.max(0,Math.min(100,p)),
 cls=n=>n<0?'n':'p',
-pn=(d,b)=>(d<0?'−':'+')+inr(Math.abs(d))+' ('+(b?(d/b*100).toFixed(1):'0')+'%)',
+pct=(d,b)=>b?(d/b*100).toFixed(1):'0.0',
 bar=(p,c)=>`<div class="bar ${c||''}"><i style="width:${clamp(p)}%"></i></div>`,
-del=(k,i)=>`<button class="x" data-act="edit" data-k="${k}" data-i="${i}" aria-label="Edit">✏️</button><button class="x" data-act="del" data-k="${k}" data-i="${i}" aria-label="Delete">×</button>`,
+del=(k,i)=>`<button class="ico" data-act="edit" data-k="${k}" data-i="${i}" aria-label="Edit">${ICO_EDIT}</button><button class="ico d" data-act="del" data-k="${k}" data-i="${i}" aria-label="Delete">${ICO_DEL}</button>`,
 today=()=>{var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},
 CUR=()=>today().slice(0,7),
-fmtD=d=>{if(!d)return'';return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})},
+fmtD=d=>d?new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'',
 mlabel=k=>MO[+k.slice(5)-1]+' '+k.slice(0,4),
-toast=m=>{var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2200)};
+addMK=(k,n)=>{var d=new Date(+k.slice(0,4),+k.slice(5,7)-1+n,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')},
+toast=m=>{var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2100)};
+function cname(c){if(!c)return'Other';var f=CATS.find(x=>c.endsWith(x[0]));if(f)return f[0];c=c.replace(/^\S+\s/,'');return c=='Fun'?'Fun & Games':c}
+function cicon(n){var f=CATS.find(x=>x[0]==n);return f?f[1]:'📦'}
 
-/* ---------- money logic ---------- */
+/* ---------- money ---------- */
+function monthKeys(){return S.months.map(o=>o.k).sort()}
 function allKeys(){var s={};S.months.forEach(o=>s[o.k]=1);S.exp.forEach(e=>s[e.d.slice(0,7)]=1);s[CUR()]=1;return Object.keys(s).sort()}
-function getM(k){return S.months.find(o=>o.k==k)||{k:k,salary:0,planned:0,budget:0}}
-function ensureM(k){var o=S.months.find(x=>x.k==k);if(!o){o={k:k,salary:0,planned:0,budget:0};S.months.push(o)}return o}
+function getM(k){return S.months.find(o=>o.k==k)||{k:k,salary:0,planned:0,budget:0,mexp:0}}
+function ensureM(k){var o=S.months.find(x=>x.k==k);if(!o){o={k:k,salary:0,planned:0,budget:0,mexp:0};S.months.push(o)}return o}
 function isClosed(k){return S.closed.indexOf(k)>-1}
 function mExp(k){return sum(S.exp.filter(e=>e.d.slice(0,7)==k),e=>e.a)}
 function mOut(k){return getM(k).mexp||0}
 function actual(k){return (getM(k).planned||0)-mOut(k)}
-function savedToDate(){return sum(allKeys().filter(k=>k<=CUR()),actual)}
-function openingSum(){return sum(S.opening,x=>x.a)}
 function goldVal(){var g=sum(S.gold,x=>x.g),incl=(S.goldRate||0)*(1+(S.goldGst==null?3:S.goldGst)/100);return incl>0?g*incl:sum(S.gold,x=>x.g*x.r*(1+(x.gst||0)/100))}
 function fdVal(f,at){if(!f.r||!f.s)return f.a;var t=Math.max(0,(new Date(at)-new Date(f.s))/315576e5);return f.a*Math.pow(1+f.r/400,4*t)}
 var fdNow=f=>fdVal(f,Math.min(Date.now(),new Date(f.m))),fdEnd=f=>fdVal(f,f.m);
 function addMo(d,m){var x=new Date(d+'T00:00:00');x.setMonth(x.getMonth()+m);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
-function applyRec(){var ym=CUR(),ch=false;S.rec.forEach(r=>{if(r.last!==ym){var dd=Math.min(Math.max(+r.day||1,1),28);S.exp.push({d:ym+'-'+String(dd).padStart(2,'0'),c:r.c,n:r.n+' (auto)',a:r.a});r.last=ym;ch=true}});if(ch)save()}
+function applyRec(){var ym=CUR(),ch=false;S.rec.forEach(r=>{if(r.last!==ym){var dd=Math.min(Math.max(+r.day||1,1),28);S.exp.push({d:ym+'-'+String(dd).padStart(2,'0'),c:r.c,n:r.n,a:r.a,auto:1});r.last=ym;ch=true}});if(ch)save()}
+function stats(){
+ var open=sum(S.opening,x=>x.a),sav=sum(monthKeys().filter(k=>k<=CUR()),actual),cash=open+sav,
+ mc=sum(S.mf,x=>x.c),sc=sum(S.st,x=>x.c),gv=goldVal(),fv=sum(S.fds,fdNow),sip=sum(S.sip,x=>x.a),
+ nw=cash+mc+sc+gv+fv,lv=Math.floor(Math.max(nw,0)/1e5)+1,
+ sk=allKeys().filter(k=>mExp(k)>0),avg=sk.length?sum(sk,mExp)/sk.length:0,cover=avg>0?cash/avg:0,
+ res=S.reserve==null?100000:S.reserve,goal=Math.max(cash-res,0),
+ parts=[['Cash',cash,'#56c2ff'],['Funds',mc,'#ff7aa8'],['Stocks',sc,'#ff8a3d'],['Gold',gv,'#ffd23f'],['FDs',fv,'#d9dde3']];
+ return {open:open,sav:sav,cash:cash,mc:mc,sc:sc,gv:gv,fv:fv,sip:sip,nw:nw,lv:lv,avg:avg,cover:cover,res:res,goal:goal,parts:parts,
+  avgKnown:sk.length>0}
+}
 
-/* ---------- edit schema ---------- */
+/* ---------- achievements ---------- */
+function achievements(){var s=stats(),mk=monthKeys();
+ return [
+  {e:'🌱',n:'First step',d:'Add your first month.',ok:S.months.length>0},
+  {e:'💰',n:'Lakh club',d:'Reach a net worth of ₹1,00,000.',ok:s.nw>=1e5},
+  {e:'💎',n:'Five lakh',d:'Reach a net worth of ₹5,00,000.',ok:s.nw>=5e5},
+  {e:'🛡️',n:'Shield up',d:'Cover 3 months of average spending.',ok:s.cover>=3},
+  {e:'🏰',n:'Fortress',d:'Cover 6 months of average spending.',ok:s.cover>=6},
+  {e:'🎯',n:'Budget boss',d:'Finish a month within its budget.',ok:allKeys().some(k=>{var b=getM(k).budget;return b>0&&mExp(k)>0&&mExp(k)<=b})},
+  {e:'📈',n:'Saver',d:'Save 20% or more of salary in one month.',ok:mk.some(k=>{var o=getM(k);return o.salary>0&&actual(k)/o.salary>=.2})},
+  {e:'🧩',n:'Diversified',d:'Hold 4 or more kinds of assets.',ok:s.parts.filter(p=>p[1]>0).length>=4},
+  {e:'🪙',n:'Gold hoarder',d:'Own 10 grams or more of gold.',ok:sum(S.gold,x=>x.g)>=10},
+  {e:'🛡',n:'Insured',d:'Add an insurance policy.',ok:S.ins.length>0},
+  {e:'🤝',n:'Debt free',d:'Settle every debt you owe.',ok:S.debts.some(d=>d.dir=='owe')&&S.debts.filter(d=>d.dir=='owe').every(d=>d.a-(d.p||0)<=0)},
+  {e:'🏆',n:'Level 5',d:'Reach level 5.',ok:s.lv>=5}
+ ]}
+
+/* ---------- edit ---------- */
 var SCH={
- exp:[['d','date','Date'],['c','cat','Category'],['n','text','What for'],['a','num','Amount ₹']],
+ exp:[['d','date','Date'],['c','cat','Category'],['n','text','Note'],['a','num','Amount ₹']],
  opening:[['n','text','Source'],['a','num','Amount ₹']],
  sip:[['n','text','Fund name'],['a','num','Monthly ₹']],
  mf:[['n','text','Fund name'],['i','num','Invested ₹'],['c','num','Current value ₹']],
  st:[['n','text','Stock name'],['i','num','Invested ₹'],['c','num','Current value ₹']],
- gold:[['d','date','Date'],['g','num','Gold (gm)'],['r','num','Rate ₹/gm'],['gst','num','GST %']],
- fds:[['n','text','Bank'],['a','num','Amount ₹'],['r','num','Rate % (optional)'],['s','date','Start date (optional)'],['m','date','Maturity date']],
+ gold:[['d','date','Date'],['g','num','Grams'],['r','num','Rate ₹/gm'],['gst','num','GST %']],
+ fds:[['n','text','Bank'],['a','num','Amount ₹'],['r','num','Rate %'],['s','date','Start date'],['m','date','Maturity date']],
  goals:[['n','text','Goal'],['t','num','Target ₹']],
  ins:[['n','text','Policy name'],['p','num','Premium per payment ₹'],['f','freq','Frequency'],['sa','num','Sum assured ₹'],['m','date','Maturity date']],
  rec:[['n','text','Name'],['c','cat','Category'],['a','num','Amount ₹'],['day','num','Day of month']],
  debts:[['n','text','Name'],['dir','dir','Direction'],['a','num','Amount ₹']],
- pay:[['d','date','Date'],['a','num','Amount ₹']],
- months:[['salary','num','Salary ₹'],['planned','num','Planned savings ₹'],['mexp','num','Emergency expense (from savings) ₹'],['budget','num','Monthly budget ₹']]
+ pay:[['d','date','Date'],['a','num','Amount ₹']]
 };
 function fld(n,t,l,v){var val=v==null?'':v;
- if(t=='cat')return `<label class="lb">${l}<select name="${n}">${CATS.map(c=>`<option${c==val?' selected':''}>${c}</option>`).join('')}</select></label>`;
+ if(t=='cat')return `<label class="lb">${l}<select name="${n}">${CATS.map(c=>`<option value="${c[0]}"${c[0]==cname(val)?' selected':''}>${c[1]} ${c[0]}</option>`).join('')}</select></label>`;
  if(t=='freq')return `<label class="lb">${l}<select name="${n}">${Object.keys(FQ).map(k=>`<option value="${k}"${k==(val||'yearly')?' selected':''}>${FQ[k][0]}</option>`).join('')}</select></label>`;
  if(t=='dir')return `<label class="lb">${l}<select name="${n}"><option value="owe"${val=='owe'?' selected':''}>I owe</option><option value="due"${val=='due'?' selected':''}>Owed to me</option></select></label>`;
  if(t=='date')return `<label class="lb">${l}<input name="${n}" type="date" value="${esc(val)}"></label>`;
  if(t=='num')return `<label class="lb">${l}<input name="${n}" type="number" inputmode="decimal" step="any" value="${esc(val)}"></label>`;
  return `<label class="lb">${l}<input name="${n}" type="text" value="${esc(val)}"></label>`}
-function openEdit(k,i,j){var hasJ=j!==undefined&&j!==null&&j!=='';var sc=k=='months'?SCH.months:(hasJ?SCH.pay:SCH[k]);
- var o=k=='months'?getM(i):(hasJ?S[k][+i].pay[+j]:S[k][+i]);if(!sc||!o)return;
+function openEdit(k,i,j){var hasJ=j!==undefined&&j!==null&&j!=='';var sc=hasJ?SCH.pay:SCH[k];
+ var o=hasJ?S[k][+i].pay[+j]:S[k][+i];if(!sc||!o)return;
  var s=document.getElementById('sheet');
- s.firstElementChild.innerHTML=`<h2 style="margin-top:0">✏️ Edit</h2><form data-k="edit"><input type="hidden" name="_k" value="${k}"><input type="hidden" name="_i" value="${i}"><input type="hidden" name="_j" value="${hasJ?j:''}">${sc.map(f=>fld(f[0],f[1],f[2],o[f[0]])).join('')}<div style="width:100%;display:flex;gap:8px;margin-top:6px"><button class="btn">Save</button><button type="button" class="btn ghost" data-act="closesheet">Cancel</button></div></form>`;
+ s.firstElementChild.innerHTML=`<h2>Edit</h2><form data-k="edit" style="margin-top:0"><input type="hidden" name="_k" value="${k}"><input type="hidden" name="_i" value="${i}"><input type="hidden" name="_j" value="${hasJ?j:''}"><div class="fields" style="margin-top:0;width:100%">${sc.map(f=>fld(f[0],f[1],f[2],o[f[0]])).join('')}</div><div style="width:100%;display:flex;gap:8px;margin-top:12px"><button class="btn" style="flex:1">Save</button><button type="button" class="btn ghost" data-act="closesheet">Cancel</button></div></form>`;
  s.classList.add('open')}
-function applyEdit(v){var k=v._k,i=v._i,j=v._j,hasJ=j!=='',sc=k=='months'?SCH.months:(hasJ?SCH.pay:SCH[k]);
- if(k=='months'&&isClosed(i)){toast('🔒 Ye month band hai');return false}
- var tgt=k=='months'?ensureM(i):(hasJ?S[k][+i].pay[+j]:S[k][+i]);
- if(k=='exp'&&(isClosed(tgt.d.slice(0,7))||isClosed(v.d.slice(0,7)))){toast('🔒 Ye month band hai, pehle Reopen karo');return false}
+function applyEdit(v){var k=v._k,i=v._i,j=v._j,hasJ=j!=='',sc=hasJ?SCH.pay:SCH[k];
+ var tgt=hasJ?S[k][+i].pay[+j]:S[k][+i];
+ if(k=='exp'&&(isClosed(tgt.d.slice(0,7))||isClosed(v.d.slice(0,7)))){toast('This month is closed');return false}
  sc.forEach(f=>{if(!(f[0] in v))return;var x=v[f[0]];tgt[f[0]]=f[1]=='num'?(+x||0):(f[1]=='text'?String(x).trim():x)});
  return true}
 
 /* ---------- forms ---------- */
-function expForm(d){return `<form data-k="exp" style="margin-top:0"><input name="d" type="date" value="${d||today()}" required><select name="c">${CATS.map(c=>`<option>${c}</option>`).join('')}</select><input name="n" placeholder="What for?" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><button class="btn">Add</button></form>`}
+function catOpts(sel){return CATS.map(c=>`<option value="${c[0]}"${sel==c[0]?' selected':''}>${c[1]} ${c[0]}</option>`).join('')}
+function expForm(d){return `<form data-k="exp" style="margin-top:0"><input name="d" type="date" value="${d||today()}" required><select name="c">${catOpts('Food')}</select><input name="n" placeholder="Note (optional)"><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><button class="btn">Add expense</button></form>`}
 
-/* ---------- views ---------- */
+/* ---------- Home ---------- */
 function home(){
- var open=openingSum(),sav=savedToDate(),cs=open+sav,mc=sum(S.mf,x=>x.c),sc=sum(S.st,x=>x.c),gv=goldVal(),fv=sum(S.fds,fdNow),sip=sum(S.sip,x=>x.a),
- nw=cs+mc+sc+gv+fv,lv=Math.floor(Math.max(nw,0)/1e5)+1,xp=Math.max(nw,0)%1e5/1e3,
- res=S.reserve==null?100000:S.reserve,carSaved=cs-res,pct=S.target>0?Math.max(carSaved,0)/S.target*100:0,
- keys=allKeys(),ex=keys.map(k=>mExp(k)).filter(x=>x>0),av=ex.length?sum(ex)/ex.length:0,sh=av>0?cs/av:0,
- parts=[['Cash',cs,'--a1'],['Funds',mc,'--a2'],['Stocks',sc,'--a3'],['Gold',gv,'--go'],['FDs',fv,'--gr']],
- tt=sum(parts,p=>Math.max(p[1],0))||1,
- bs=[['💰','₹1L net worth',nw>=1e5],['🛡️','Shield 3 mo',sh>=3],['🎯','Budget boss',keys.some(k=>{var b=getM(k).budget;return b>0&&mExp(k)>0&&mExp(k)<=b})],['🧩','Diversified',parts.filter(p=>p[1]>0).length>=4],['🏆','Level 5',lv>=5]];
- var nag=(S.exp.length+S.opening.length+S.months.length+S.fds.length)>=5&&(!S.lastBackup||(Date.now()-new Date(S.lastBackup))/864e5>14);
- return `${nag?`<div class="warn">💾 Backup due. Last one: ${S.lastBackup?fmtD(S.lastBackup):'never'}. Export below.</div>`:''}
- <div class="hero"><div class="hr"><div><small>TOTAL NET WORTH</small><div class="big">${inr(nw)}</div></div><div class="ring" style="--p:${xp*3.6}deg"><b class="f">${lv}</b><small>LVL</small></div></div>
- <div class="stack">${parts.map(p=>p[1]>0?`<i style="width:${p[1]/tt*100}%;background:var(${p[2]})"></i>`:'').join('')}</div>
- <div class="leg">${parts.map(p=>`<span><u style="background:var(${p[2]})"></u>${p[0]}</span>`).join('')}</div>
- <small>${xp.toFixed(0)}% to Level ${lv+1} · next at ${inr(lv*1e5)}</small></div>
- <div class="tiles"><div class="tile"><small>🏦 Cash (opening + savings)</small><b class="f">${inr(cs)}</b></div><div class="tile"><small>📈 Mutual funds</small><b class="f">${inr(mc)}</b></div><div class="tile"><small>📊 Stocks</small><b class="f">${inr(sc)}</b></div><div class="tile"><small>🪙 Gold</small><b class="f">${inr(gv)}</b></div><div class="tile"><small>🔒 Fixed deposits</small><b class="f">${inr(fv)}</b></div><div class="tile"><small>🔁 SIP / month</small><b class="f">${inr(sip)}</b></div></div>
- <h2>🏅 Achievements</h2><div class="bd">${bs.map(b=>`<span class="${b[2]?'on':''}">${b[0]} ${b[1]}</span>`).join('')}</div>
- <h2>🎯 Goals</h2>
- <div class="card pad"><div class="hr"><span>🚗 Car down payment</span><b>${clamp(pct).toFixed(0)}%</b></div>${bar(pct,'pk')}
- <div class="kv"><div><small>🏁 Opening savings</small><b>${inr(open)}</b></div><div><small>💎 Savings till now</small><b>${inr(sav)}</b></div></div>
- <small style="display:block;margin-top:8px">Opening + savings − reserve ${inr(res)} = <b class="${cls(carSaved)}">${inr(carSaved)}</b> counted for car</small>
- <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><input id="target" type="number" inputmode="decimal" step="any" value="${S.target||''}" placeholder="🎯 Car target ₹"><input id="reserve" type="number" inputmode="decimal" step="any" value="${res}" placeholder="Reserve ₹"></div></div>
- ${S.goals.map((g,i)=>`<div class="card pad" style="margin-top:10px"><div class="hr"><span class="grow">${esc(g.n)}</span><span>${clamp(g.s/g.t*100).toFixed(0)}%</span>${del('goals',i)}</div>${bar(g.s/g.t*100,'gr')}<div style="display:flex;gap:8px;align-items:center"><small>Saved</small><input class="cv" data-gs="${i}" type="number" inputmode="decimal" step="any" value="${g.s}"><small>of ${inr(g.t)}</small></div></div>`).join('')}
- <form data-k="goals"><input name="n" placeholder="New goal (Trip, PC…)" required><input name="t" type="number" inputmode="decimal" step="any" placeholder="Target ₹" required><button class="btn">Add goal</button></form>
- <h2>🛡️ Emergency shield</h2><div class="card pad">${av>0?`<b class="f">${sh.toFixed(1)} months</b> <small>of average monthly spend (goal 6)</small>${bar(sh/6*100,sh<3?'bad':'gr')}`:'<div class="mute">Add expenses to see how long your cash lasts.</div>'}</div>
- <h2>🏁 Opening savings</h2><div class="card">${S.opening.length?S.opening.map((x,i)=>`<div class="row"><div class="grow">${esc(x.n)}</div><div class="amt">${inr(x.a)}</div>${del('opening',i)}</div>`).join(''):'<div class="empty">Bank, cash, old investments before Jan.</div>'}<div class="row tot"><div class="grow">Total</div><div class="amt">${inr(open)}</div></div></div>
- <form data-k="opening"><input name="n" placeholder="Source" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><button class="btn">Add</button></form>
- <h2>🎨 Theme</h2><div style="display:flex;gap:12px">${[['noir','#e3b84a','Noir Gold'],['emerald','#3ddc97','Emerald'],['royal','#8b5cf6','Royal'],['crimson','#ff5a6a','Crimson']].map(t=>`<button data-act="theme" data-t="${t[0]}" class="sw${S.theme==t[0]?' on':''}" style="background:${t[1]}" aria-label="${t[2]}"></button>`).join('')}</div>
- <h2>💾 Backup</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" data-act="export">Export</button><button class="btn ghost" data-act="import">Import</button><button class="btn ghost" data-act="csv">CSV</button></div>
- <p class="mute">Last backup: ${S.lastBackup?fmtD(S.lastBackup):'never'}. Data stays only in this browser on this phone.</p><input type="file" id="file" accept="application/json" hidden>`}
+ var s=stats(),p=clamp(s.goal/(S.target||1)*100),xp=Math.max(s.nw,0)%1e5/1e3,tt=sum(s.parts,q=>Math.max(q[1],0))||1,
+ A=achievements(),won=A.filter(a=>a.ok).length;
+ var nag=(S.exp.length+S.months.length)>=5&&(!S.lastBackup||(Date.now()-new Date(S.lastBackup))/864e5>14);
+ return `<div class="fade">
+ ${nag?`<div class="infobox">No backup for a while. Export one from Settings below.</div>`:''}
+ <section class="hero">
+  <div class="hr"><div><div class="lbl">Net worth</div><div class="big">${inr(s.nw)}</div></div><div class="ring" style="--p:${xp*3.6}deg"><b>${s.lv}</b><small>Level</small></div></div>
+  <div class="stack">${s.parts.map(q=>q[1]>0?`<i style="width:${q[1]/tt*100}%;background:${q[2]}"></i>`:'').join('')}</div>
+  <div class="leg">${s.parts.map(q=>`<span><u style="background:${q[2]}"></u>${q[0]}</span>`).join('')}</div>
+ </section>
+ <div class="grid">
+  <div class="tile"><div class="tlbl"><span class="tic">🏦</span>Cash</div><b>${inr(s.cash)}</b></div>
+  <div class="tile"><div class="tlbl"><span class="tic">📈</span>Funds</div><b>${inr(s.mc)}</b></div>
+  <div class="tile"><div class="tlbl"><span class="tic">📊</span>Stocks</div><b>${inr(s.sc)}</b></div>
+  <div class="tile"><div class="tlbl"><span class="tic">🪙</span>Gold</div><b>${inr(s.gv)}</b></div>
+  <div class="tile"><div class="tlbl"><span class="tic">🔒</span>Fixed deposits</div><b>${inr(s.fv)}</b></div>
+  <div class="tile"><div class="tlbl"><span class="tic">🔁</span>SIP / month</div><b>${inr(s.sip)}</b></div>
+ </div>
 
-function chartBlock(){var ks=allKeys().filter(k=>k.slice(0,4)==String(Y));
- var mx=Math.max(1,...ks.map(k=>Math.max(getM(k).planned||0,mOut(k)))),w=520/12;
- return `<h2>📊 ${Y} at a glance</h2><div class="card pad"><svg viewBox="0 0 520 170" width="100%" role="img" aria-label="Savings and spending by month">${MO.map((n,m)=>{var k=Y+'-'+String(m+1).padStart(2,'0'),o=getM(k),s=(o.planned||0)/mx*120,e=mOut(k)/mx*120,x=m*w+w*.12,bw=w*.34;return `<rect x="${x}" y="${140-s}" width="${bw}" height="${s}" rx="3" fill="var(--a1)"/><rect x="${x+bw+3}" y="${140-e}" width="${bw}" height="${e}" rx="3" fill="var(--a3)"/><text x="${x+bw+1.5}" y="158" font-size="11" fill="var(--mute)" text-anchor="middle">${n}</text>`}).join('')}</svg><small><u style="color:var(--a1)">■</u> Planned savings &nbsp; <u style="color:var(--a3)">■</u> Emergency use</small></div>`}
+ <div class="sec"><span>${esc(S.goalName||'Main goal')}</span></div>
+ <div class="card">
+  <div class="hr"><div><div class="lbl">Saved toward target</div><div class="f" style="font-size:22px;margin-top:4px">${inr(s.goal)} <small>of ${inr(S.target)}</small></div></div><div class="f" style="font-size:20px;color:var(--a1)">${p.toFixed(0)}%</div></div>
+  ${bar(p,'warn')}
+  <small>Cash ${inr(s.cash)} minus reserve ${inr(s.res)}</small>
+  <div class="fields">
+   <input id="gname" type="text" value="${esc(S.goalName||'')}" placeholder="Goal name">
+   <input id="target" type="number" inputmode="decimal" step="any" value="${S.target||''}" placeholder="Target ₹">
+   <input id="reserve" type="number" inputmode="decimal" step="any" value="${s.res}" placeholder="Reserve ₹">
+  </div>
+ </div>
+ ${S.goals.map((g,i)=>`<div class="card" style="margin-top:10px"><div class="hr"><div class="grow"><b>${esc(g.n)}</b><small style="display:block">${inr(g.s)} of ${inr(g.t)}</small></div><span class="pill">${clamp(g.s/g.t*100).toFixed(0)}%</span>${del('goals',i)}</div>${bar(g.s/g.t*100,'good')}<div style="display:flex;gap:8px;align-items:center"><small>Saved so far</small><input class="cv" data-gs="${i}" type="number" inputmode="decimal" step="any" value="${g.s}"></div></div>`).join('')}
+ <form data-k="goals"><input name="n" placeholder="New goal" required><input name="t" type="number" inputmode="decimal" step="any" placeholder="Target ₹" required><button class="btn">Add</button></form>
+
+ <div class="sec"><span>Safety cover</span></div>
+ <div class="card">
+  <div class="hr"><div><div class="lbl">Months covered</div><div class="f" style="font-size:22px;margin-top:4px">${s.avgKnown?s.cover.toFixed(1):'—'}</div></div><small>goal 6</small></div>
+  ${bar(s.cover/6*100,s.cover<3?'bad':'good')}
+  <small>How many months your cash lasts at your average monthly spend (${s.avgKnown?inr(s.avg):'add expenses to see'}).</small>
+ </div>
+
+ <div class="sec"><span>Achievements</span><span>${won} / ${A.length}</span></div>
+ <div class="ach">${A.map((a,i)=>`<button class="${a.ok?'on':''} ${achSel==i?'sel':''}" data-act="ach" data-i="${i}"><span class="e">${a.e}</span>${a.n}</button>`).join('')}</div>
+ ${achSel>-1?`<div class="card achd"><b>${A[achSel].e} ${A[achSel].n}</b><small style="display:block;margin-top:4px">${A[achSel].d}</small><span class="pill ${A[achSel].ok?'g':''}" style="margin-top:8px;display:inline-block">${A[achSel].ok?'Unlocked':'Locked'}</span></div>`:'<small style="display:block;margin-top:10px">Tap a badge to see how to unlock it.</small>'}
+
+ <div class="sec"><span>Opening savings</span><span>${inr(s.open)}</span></div>
+ <div class="card">${S.opening.length?S.opening.map((x,i)=>`<div class="row"><div class="grow">${esc(x.n)}</div><div class="amt">${inr(x.a)}</div>${del('opening',i)}</div>`).join(''):'<div class="empty">Bank balance, cash or old investments before January.</div>'}</div>
+ <form data-k="opening"><input name="n" placeholder="Source" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><button class="btn">Add</button></form>
+
+ <div class="sec"><span>Settings</span></div>
+ <div class="card">
+  <div class="lbl" style="margin-bottom:10px">Theme</div>
+  <div class="sets">${THEMES.map(t=>`<button class="swatch ${S.theme==t[0]?'on':''}" data-act="theme" data-t="${t[0]}" style="background:${t[1]}" aria-label="${t[2]}"></button>`).join('')}</div>
+  <div class="lbl" style="margin:16px 0 10px">Backup</div>
+  <div class="sets"><button class="btn ghost" data-act="export">Export</button><button class="btn ghost" data-act="import">Import</button><button class="btn ghost" data-act="csv">CSV</button></div>
+  <small style="display:block;margin-top:12px">Last backup: ${S.lastBackup?fmtD(S.lastBackup):'never'}. Data stays only in this browser on this phone.</small>
+ </div>
+ <input type="file" id="file" accept="application/json" hidden>
+ </div>`}
+
+/* ---------- Months ---------- */
+function chartBlock(){var ks=allKeys().slice(-12);
+ var mx=Math.max(1,...ks.map(k=>Math.max(getM(k).planned||0,mOut(k)))),W=540,H=170,gw=W/Math.max(ks.length,6),bw=gw*.34;
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Last 12 months">${ks.map((k,i)=>{var m=+k.slice(5,7)-1,p=(getM(k).planned||0)/mx*112,e=mOut(k)/mx*112,x=i*gw+gw*.1,lab=(m==0||i==0)?MO[m]+' '+k.slice(2,4):MO[m];
+ return `<rect x="${x}" y="${122-p}" width="${bw}" height="${p}" rx="4" fill="var(--a1)"/><rect x="${x+bw+2}" y="${122-e}" width="${bw}" height="${e}" rx="4" fill="var(--a3)"/><text x="${x+bw}" y="150" font-size="10" fill="var(--mute)" text-anchor="middle">${lab}</text>`}).join('')}</svg>
+ <div class="leg" style="margin-top:8px"><span><u style="background:var(--a1)"></u>Planned savings</span><span><u style="background:var(--a3)"></u>Emergency expense</span></div>`}
 
 function months(){
- var keys=allKeys().slice().reverse(),cnt=keys.length,sal=sum(keys,k=>getM(k).salary||0),used=sum(keys,mOut),sv=sum(keys,actual);
- var pend=allKeys().filter(k=>k<CUR()&&!isClosed(k)&&(mOut(k)>0||getM(k).planned>0));
- return chartBlock()
- +(pend.length?`<div class="warn">📅 <b>${mlabel(pend[0])}</b> khatam ho gaya? Use band karo taaki us me koi change na ho. <div style="margin-top:8px"><button class="btn" data-act="closem" data-i="${pend[0]}">🔒 Close ${mlabel(pend[0])}</button></div></div>`:'')
- +`<h2>📅 Salary & savings</h2>
- <form data-k="months" style="margin:0 0 4px"><input name="k" type="month" value="${CUR()}" required><button class="btn">+ Add month</button></form>
- <div class="tiles"><div class="tile"><span class="corner">${cnt} mo</span><small>💼 Salary</small><b class="f">${inr(sal)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>💸 Emergency use</small><b class="f">${inr(used)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>💎 Actual savings</small><b class="f ${cls(sv)}">${inr(sv)}</b></div><div class="tile"><span class="corner">${cnt} mo</span><small>📊 Saving rate</small><b class="f">${sal?(sv/sal*100).toFixed(0):0}%</b></div></div>
- <div style="height:12px"></div>`
- +keys.map(k=>{var o=getM(k),cl=isClosed(k),u=mOut(k),ac=(o.planned||0)-u;
- return `<div class="card mc ${cl?'lock':''}"><div class="h"><b>${mlabel(k)}</b><span class="badge">${cl?'🔒 Closed':'🟢 Open'}</span></div>
- <div class="g2"><label>💼 Salary<input data-sal="${k}" type="number" inputmode="decimal" step="any" value="${o.salary||''}" placeholder="0" ${cl?'disabled':''}></label><label>🎯 Planned savings<input data-plan="${k}" type="number" inputmode="decimal" step="any" value="${o.planned||''}" placeholder="0" ${cl?'disabled':''}></label></div>
- <div class="g2"><label>💸 Emergency expense (from savings)<input data-mex="${k}" type="number" inputmode="decimal" step="any" value="${o.mexp||''}" placeholder="0" ${cl?'disabled':''}></label><div class="kv" style="margin:0"><div><small>💎 Actual savings</small><b class="${cls(ac)}">${inr(ac)}</b></div></div></div>
- <div class="acts"><button data-act="edit" data-k="months" data-i="${k}">✏️ Edit</button>${cl?`<button data-act="reopen" data-i="${k}">🔓 Reopen</button>`:`<button data-act="closem" data-i="${k}">🔒 Close month</button>`}<button data-act="delm" data-i="${k}">🗑 Clear</button></div></div>`}).join('')
- +'<p class="mute">Actual savings = Planned savings − Emergency expense (jo yahan daala). Spend tab ke kharche yahan nahi judte. Net worth me current month tak ki actual savings jaati hai.</p>'}
+ var keys=monthKeys().slice().reverse(),cnt=keys.length,sal=sum(keys,k=>getM(k).salary||0),used=sum(keys,mOut),sv=sum(keys,actual);
+ var pend=monthKeys().filter(k=>k<CUR()&&!isClosed(k));
+ return `<div class="fade">
+ ${pend.length?`<div class="warnbox"><b>${mlabel(pend[0])}</b> looks finished. Close it to lock its numbers.<div style="margin-top:8px"><button class="btn ghost" data-act="closem" data-i="${pend[0]}">Close ${mlabel(pend[0])}</button></div></div>`:''}
+ <div class="sec"><span>Last 12 months</span></div>
+ <div class="card">${chartBlock()}</div>
+ <div class="grid">
+  <div class="tile"><span class="corner">${cnt} mo</span><div class="lbl">Salary</div><b>${inr(sal)}</b></div>
+  <div class="tile"><span class="corner">${cnt} mo</span><div class="lbl">Emergency use</div><b>${inr(used)}</b></div>
+  <div class="tile"><span class="corner">${cnt} mo</span><div class="lbl">Actual savings</div><b class="${cls(sv)}">${inr(sv)}</b></div>
+  <div class="tile"><span class="corner">${cnt} mo</span><div class="lbl">Saving rate</div><b>${sal?(sv/sal*100).toFixed(0):0}%</b></div>
+ </div>
+ <div class="sec"><span>Add month</span></div>
+ <form data-k="months" style="margin-top:0"><input name="k" type="month" value="${CUR()}" required><button class="btn">Add</button></form>
+ <div class="sec"><span>Months</span></div>
+ ${keys.length?keys.map(k=>{var o=getM(k),cl=isClosed(k),u=mOut(k),ac=(o.planned||0)-u;
+ return `<div class="card mc ${cl?'lock':''}">
+  <div class="mh"><b>${mlabel(k)}</b><div style="display:flex;gap:6px;align-items:center"><span class="pill ${cl?'':'g'}">${cl?'Closed':'Open'}</span><button class="ico d" data-act="delm" data-i="${k}" aria-label="Delete month">${ICO_DEL}</button></div></div>
+  <div class="fields2"><label>Salary<input data-sal="${k}" type="number" inputmode="decimal" step="any" value="${o.salary||''}" placeholder="0" ${cl?'disabled':''}></label><label>Planned savings<input data-plan="${k}" type="number" inputmode="decimal" step="any" value="${o.planned||''}" placeholder="0" ${cl?'disabled':''}></label></div>
+  <div class="fields2"><label>Emergency expense<input data-mex="${k}" type="number" inputmode="decimal" step="any" value="${o.mexp||''}" placeholder="0" ${cl?'disabled':''}></label><div><div class="lbl">Actual savings</div><div class="amt ${cls(ac)}" style="font-size:20px;margin-top:6px">${inr(ac)}</div></div></div>
+  <div class="acts">${cl?`<button class="link" data-act="reopen" data-i="${k}">Reopen month</button>`:`<button class="link" data-act="closem" data-i="${k}">Close month</button>`}</div>
+ </div>`}).join(''):'<div class="card empty">No months yet. Add one above.</div>'}
+ </div>`}
 
-function recBlock(){return `<h2>🔁 Recurring expenses</h2><div class="card">${S.rec.length?S.rec.map((r,i)=>`<div class="row"><div class="grow">${esc(r.n)}<small>${esc(r.c)} · every month, day ${r.day}</small></div><div class="amt">${inr(r.a)}</div>${del('rec',i)}</div>`).join(''):'<div class="empty">Rent, EMI, subscriptions: add once, auto every month.</div>'}</div>
- <form data-k="rec"><input name="n" placeholder="Name (Rent, EMI…)" required><select name="c">${CATS.map(c=>`<option>${c}</option>`).join('')}</select><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><input name="day" type="number" inputmode="numeric" min="1" max="28" placeholder="Day (1–28)"><button class="btn">Add</button></form>`}
+/* ---------- Spend ---------- */
+function recBlock(){return `<div class="sec"><span>Recurring</span></div>
+ <div class="card">${S.rec.length?S.rec.map((r,i)=>`<div class="row"><div class="ic">${cicon(cname(r.c))}</div><div class="grow"><b>${esc(r.n)}</b><small>${esc(cname(r.c))} · every month, day ${r.day}</small></div><div class="amt">${inr(r.a)}</div>${del('rec',i)}</div>`).join(''):'<div class="empty">Rent or subscriptions you pay every month.</div>'}</div>
+ <form data-k="rec"><input name="n" placeholder="Name" required><select name="c">${catOpts('Rent')}</select><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><input name="day" type="number" inputmode="numeric" min="1" max="28" placeholder="Day"><button class="btn">Add</button></form>`}
 
 function spend(){
  var keys=allKeys(),k=selM&&keys.indexOf(selM)>-1?selM:CUR(),cl=isClosed(k),o=getM(k),bd=o.budget||0,
- ex=S.exp.filter(e=>e.d.slice(0,7)==k),mt=sum(ex,e=>e.a),bp=bd>0?mt/bd*100:0,over=bd>0&&mt>bd,
- cs=CATS.map(c=>[c,sum(ex.filter(e=>(e.c||CATS[7])==c),e=>e.a)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),mx=cs.length?cs[0][1]:1,
- list=ex.map(e=>[e,S.exp.indexOf(e)]).sort((a,b)=>a[0].d<b[0].d?1:-1),
- defD=k==CUR()?today():k+'-01';
- return `<div class="mpick"><button data-act="mprev" aria-label="Previous month">‹</button><select id="msel">${keys.slice().reverse().map(x=>`<option value="${x}"${x==k?' selected':''}>${mlabel(x)}${isClosed(x)?' 🔒':''}</option>`).join('')}</select><button data-act="mnext" aria-label="Next month">›</button></div>
- <div class="card pad"><div class="hr"><div><small>Spent in ${mlabel(k)}</small><div class="big" style="font-size:24px">${inr(mt)}</div></div><span class="badge">${cl?'🔒 Closed':'🟢 Open'}</span></div>
- ${bd>0?bar(bp,over?'bad':bp>80?'pk':'gr'):''}
- ${over?`<div class="warn">⚠️ Is month me budget se <b>${inr(mt-bd)}</b> zyada kharch hua. (Budget ${inr(bd)})</div>`:bd>0?`<small>${inr(bd-mt)} bacha hai budget me</small>`:'<small>Budget set nahi hai</small>'}
- <div style="margin-top:8px"><label class="lb" style="margin:0;flex:none;width:100%">💰 Monthly budget for ${mlabel(k)} ₹<input id="bud" type="number" inputmode="decimal" step="any" value="${bd||''}" placeholder="e.g. 40000" ${cl?'disabled':''}></label></div></div>
- <h2>➕ Add expense</h2>${cl?'<div class="card pad mute">🔒 Ye month band hai. Kharcha add karne ke liye Reopen karo ya naya month chuno.</div>':expForm(defD)}
- <h2>🧾 Where it went</h2><div class="card pad">${cs.length?cs.map(x=>`<div class="cat"><span>${x[0]}</span>${bar(x[1]/mx*100,'pk')}<span>${inr(x[1])}</span></div>`).join(''):'<div class="mute">No expenses this month.</div>'}</div>
+ ex=S.exp.filter(e=>e.d.slice(0,7)==k),mt=sum(ex,e=>e.a),over=bd>0&&mt>bd,prevK=addMK(k,-1),
+ spent=sk=>sum(S.exp.filter(e=>e.d.slice(0,7)==sk),e=>e.a),
+ sk2=allKeys().filter(q=>spent(q)>0),avg=sk2.length?sum(sk2,spent)/sk2.length:0,
+ fixedRow=n=>{var now=sum(ex.filter(e=>cname(e.c)==n),e=>e.a),pv=sum(S.exp.filter(e=>e.d.slice(0,7)==prevK&&cname(e.c)==n),e=>e.a),dl=now-pv;
+  return `<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${n}</b><small>${pv?(dl>0?`<span class="n">▲ ${inr(dl)}</span> vs last month`:dl<0?`<span class="p">▼ ${inr(-dl)}</span> vs last month`:'same as last month'):'no last-month entry'}</small></div><div class="amt">${inr(now)}</div></div>`},
+ regular={};ex.forEach(e=>{var n=cname(e.c);if(FIXED.indexOf(n)<0)regular[n]=(regular[n]||0)+e.a});
+ var rows=Object.keys(regular).sort((a,b)=>regular[b]-regular[a]),mx=rows.length?regular[rows[0]]:1,
+ groups={};ex.map((e)=>e).sort((a,b)=>a.d<b.d?1:-1).forEach(e=>{(groups[e.d]=groups[e.d]||[]).push(e)});
+ return `<div class="fade">
+ <div class="mpick"><button data-act="mprev" aria-label="Previous month">‹</button><select id="msel">${keys.slice().reverse().map(x=>`<option value="${x}"${x==k?' selected':''}>${mlabel(x)}${isClosed(x)?' · closed':''}</option>`).join('')}</select><button data-act="mnext" aria-label="Next month">›</button></div>
+ <div class="card">
+  <div class="summary"><div><div class="lbl">Spent · ${mlabel(k)}</div><div class="big" style="font-size:28px">${inr(mt)}</div></div>
+   <div class="s" style="text-align:right"><small>Average / month</small><b>${sk2.length?inr(avg):'—'}</b></div></div>
+  ${bd>0?bar(mt/bd*100,over?'bad':mt/bd>.8?'warn':'good'):''}
+  <div class="fields" style="grid-template-columns:1fr auto;align-items:center"><small>${bd>0?(over?`<span class="n">${inr(mt-bd)} over budget</span>`:`${inr(bd-mt)} left of ${inr(bd)}`):'Monthly budget'}</small><input id="bud" type="number" inputmode="decimal" step="any" value="${bd||''}" placeholder="Budget ₹" style="width:130px;flex:none" ${cl?'disabled':''}></div>
+ </div>
+
+ <div class="sec"><span>Add expense</span></div>
+ ${cl?'<div class="card empty">This month is closed. Reopen it from Months to add expenses.</div>':`<div class="card" style="padding:12px">${expForm(k==CUR()?today():k+'-01')}</div>`}
+
+ <div class="sec"><span>Fixed & shared</span></div>
+ <div class="card">${FIXED.map(fixedRow).join('')}</div>
+
+ <div class="sec"><span>By category</span></div>
+ <div class="card">${rows.length?rows.map(n=>`<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${n}</b>${bar(regular[n]/mx*100)}</div><div class="amt">${inr(regular[n])}</div></div>`).join(''):'<div class="empty">No expenses this month.</div>'}</div>
+
  ${recBlock()}
- <h2>📜 History · ${mlabel(k)}</h2><div class="card">${list.length?list.map(([e,i])=>`<div class="row"><div class="grow">${esc(e.n)}<small>${esc(e.c||CATS[7])} · ${fmtD(e.d)}</small></div><div class="amt">${inr(e.a)}</div>${cl?'':del('exp',i)}</div>`).join(''):'<div class="empty">No expenses this month.</div>'}</div>`}
 
-function hold(k,t){var a=S[k],i=sum(a,x=>x.i),c=sum(a,x=>x.c);
- return `<h2>${t}</h2><div class="card">${a.length?a.map((x,j)=>`<div class="row"><div class="grow">${esc(x.n)}<small>Invested ${inr(x.i)}</small><small class="${cls(x.c-x.i)}">${pn(x.c-x.i,x.i)}</small></div><input class="cv" data-cv="${k},${j}" type="number" inputmode="decimal" step="any" value="${x.c}" aria-label="Current value">${del(k,j)}</div>`).join(''):'<div class="empty">Nothing here yet.</div>'}
- <div class="row tot"><div class="grow">Total<small>Invested ${inr(i)}</small></div><div class="r"><div class="amt">${inr(c)}</div><small class="${cls(c-i)}">${pn(c-i,i)}</small></div></div></div>
- <form data-k="${k}"><input name="n" placeholder="Name" required><input name="i" type="number" inputmode="decimal" step="any" placeholder="Invested ₹" required><input name="c" type="number" inputmode="decimal" step="any" placeholder="Current ₹ (optional)"><button class="btn">Add</button></form>
- <p class="mute" style="margin:6px 0 0">Type in the box on a row to update its current value.</p>`}
+ <div class="sec"><span>History</span><span>${ex.length} entries</span></div>
+ <div class="card">${ex.length?Object.keys(groups).sort().reverse().map(d=>`<div class="dayh">${fmtD(d)}</div>`+groups[d].map(e=>{var idx=S.exp.indexOf(e),n=cname(e.c),fx=FIXED.indexOf(n)>-1;
+  return `<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${esc(e.n||n)}</b><small>${n}${fx?' · fixed':''}${e.auto?' · auto':''}</small></div><div class="amt">${inr(e.a)}</div>${cl?'':del('exp',idx)}</div>`}).join('')).join(''):'<div class="empty">No expenses in this month.</div>'}</div>
+ </div>`}
 
-function fdBlock(){var L=S.fds.map((f,i)=>[f,i]).sort((a,b)=>a[0].m<b[0].m?-1:1),pr=sum(S.fds,f=>f.a),ev=sum(S.fds,fdEnd),T=Date.now();
- return `<h2>🔒 Fixed deposits</h2><div class="card">${L.length?L.map(([f,i])=>{var dl=Math.ceil((new Date(f.m)-T)/864e5);
- return `<div class="row"><div class="grow">${esc(f.n)}<small>${inr(f.a)}${f.r?' @ '+f.r+'%':''} · matures ${fmtD(f.m)}</small><small class="${dl<=0?'p':dl<=30?'n':''}">${dl<=0?'✅ Matured':dl<=30?'⏳ '+dl+' days left':dl+' days left'}</small></div><div class="r"><div class="amt">${inr(fdEnd(f))}</div><small>at maturity</small></div>${del('fds',i)}</div>`}).join(''):'<div class="empty">No FDs yet.</div>'}
- <div class="row tot"><div class="grow">${S.fds.length} FD${S.fds.length==1?'':'s'}<small>Invested ${inr(pr)}</small></div><div class="r"><div class="amt">${inr(ev)}</div><small>at maturity</small></div></div></div>
- <form data-k="fds"><input name="n" placeholder="Bank / name" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><input name="r" type="number" inputmode="decimal" step="any" placeholder="Rate % (optional)"><label class="lb">Start date (optional)<input name="s" type="date"></label><label class="lb">Maturity date<input name="m" type="date" required></label><button class="btn">Add FD</button></form>
- <p class="mute" style="margin:6px 0 0">Rate aur start date daalne par maturity amount bhi dikhega (quarterly compounding).</p>`}
+/* ---------- Invest ---------- */
+function holdView(k,title){var a=S[k],i=sum(a,x=>x.i),c=sum(a,x=>x.c),pl=c-i;
+ return `<div class="card"><div class="stats3"><div><div class="lbl">Invested</div><b>${inr(i)}</b></div><div><div class="lbl">Current</div><b>${inr(c)}</b></div><div><div class="lbl">Gain / loss</div><b class="${cls(pl)}">${pl>=0?'+':''}${inr(pl)}</b><small class="${cls(pl)}">${pl>=0?'+':''}${pct(pl,i)}%</small></div></div></div>
+ <div class="card" style="margin-top:10px">${a.length?a.map((x,j)=>{var d=x.c-x.i;return `<div class="row"><div class="grow"><div class="nm">${esc(x.n)}</div><div class="mt">Invested ${inr(x.i)}</div></div><div class="rt"><input class="cv" data-cv="${k},${j}" type="number" inputmode="decimal" step="any" value="${x.c}" aria-label="Current value"><div class="mt ${cls(d)}" style="margin:0">${d>=0?'+':''}${pct(d,x.i)}%</div></div>${del(k,j)}</div>`}).join(''):`<div class="empty">No ${title.toLowerCase()} yet.</div>`}</div>
+ <form data-k="${k}"><input name="n" placeholder="Name" required><input name="i" type="number" inputmode="decimal" step="any" placeholder="Invested ₹" required><input name="c" type="number" inputmode="decimal" step="any" placeholder="Current ₹"><button class="btn">Add</button></form>`}
 
-function insBlock(){var T0=today(),L=S.ins.map((p,i)=>[p,i]),paidYr=sum(S.ins,p=>sum(p.pay.filter(x=>x.d.startsWith(Y)),x=>x.a));
- return `<h2>🛡️ Insurance (LIC)</h2>`
- +(L.length?L.map(([p,i])=>{var fk=p.f||'yearly',f=FQ[fk],last=p.pay.map(x=>x.d).sort().pop(),due=last?addMo(last,f[1]):T0,
-   dd=Math.round((new Date(due+'T00:00:00')-new Date(T0+'T00:00:00'))/864e5),
-   st=dd<0?`<small class="n">⚠️ Overdue by ${-dd} day${-dd==1?'':'s'}</small>`:dd<=30?`<small style="color:var(--go)">⏳ Due in ${dd} day${dd==1?'':'s'} · ${fmtD(due)}</small>`:`<small class="p">✅ Next due ${fmtD(due)}</small>`,
-   paid=sum(p.pay.filter(x=>x.d.startsWith(Y)),x=>x.a),
-   hist=p.pay.map((x,j)=>[x,j]).sort((a,b)=>a[0].d<b[0].d?1:-1).slice(0,8);
- return `<div class="card pad" style="margin-bottom:10px">
- <div class="hr"><div class="grow"><b class="f" style="font-size:16px">${esc(p.n)}</b><small style="display:block">${inr(p.p)} ${f[0].toLowerCase()} · ≈ ${inr(p.p*12/f[1])}/yr${p.sa?' · Sum assured '+inr(p.sa):''}${p.m?' · Matures '+fmtD(p.m):''}</small></div>
- <select data-fq="${i}" style="flex:none;width:auto;padding:6px 8px;font-size:14px">${Object.keys(FQ).map(k=>`<option value="${k}"${fk==k?' selected':''}>${FQ[k][0]}</option>`).join('')}</select>${del('ins',i)}</div>
- <div style="margin-top:6px">${st}</div>
- <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px"><small>Paid ${Y}: <b class="p">${inr(paid)}</b> · Total ${inr(sum(p.pay,x=>x.a))}</small><button class="btn" data-act="paynow" data-i="${i}">✅ Paid today</button></div>
- <form data-k="inspay" style="margin-top:8px"><input type="hidden" name="i" value="${i}"><input name="d" type="date" value="${T0}" required><input name="a" type="number" inputmode="decimal" step="any" value="${p.p}" required><button class="btn">Add payment</button></form>
- ${hist.length?`<div style="margin-top:8px">${hist.map(([x,j])=>`<div class="row" style="padding:6px 0"><div class="grow"><small>${fmtD(x.d)}</small></div><div class="amt">${inr(x.a)}</div><button class="x" data-act="edit" data-k="ins" data-i="${i}" data-j="${j}" aria-label="Edit">✏️</button><button class="x" data-act="delpay" data-k="ins" data-i="${i}" data-j="${j}" aria-label="Remove">×</button></div>`).join('')}</div>`:''}
- </div>`}).join(''):'<div class="card pad empty">No policy added yet.</div>')
- +`<div class="tiles" style="margin:10px 0 0"><div class="tile"><small>📆 Premium paid ${Y}</small><b class="f">${inr(paidYr)}</b></div></div>`
- +`<form data-k="ins"><input name="n" placeholder="Policy name (e.g. Jeevan Lakshya)" required><input name="p" type="number" inputmode="decimal" step="any" placeholder="Premium per payment ₹" required><select name="f">${Object.keys(FQ).map(k=>`<option value="${k}">${FQ[k][0]}</option>`).join('')}</select><input name="sa" type="number" inputmode="decimal" step="any" placeholder="Sum assured ₹ (optional)"><label class="lb">Maturity date (optional)<input name="m" type="date"></label><button class="btn">Add policy</button></form>
- <p class="mute" style="margin:6px 0 0">Payment date aur amount khud daal sakte ho. Next due aakhri payment se frequency ke hisaab se nikalti hai. Premium savings ko nahi chhedta.</p>`}
+function goldView(){var T0=today(),g=sum(S.gold,x=>x.g),cost=sum(S.gold,x=>x.g*x.r*(1+(x.gst||0)/100)),gv=goldVal(),gg=S.goldGst==null?3:S.goldGst,base=S.goldRate||0,gst=base*gg/100,incl=base+gst;
+ return `<div class="card"><div class="stats3"><div><div class="lbl">Holding</div><b>${+g.toFixed(3)} g</b></div><div><div class="lbl">Cost</div><b>${inr(cost)}</b></div><div><div class="lbl">Value now</div><b class="${cls(gv-cost)}">${inr(gv)}</b></div></div></div>
+ <div class="card" style="margin-top:10px">${S.gold.length?S.gold.map((x,i)=>{var b=x.g*x.r,t=b*(x.gst||0)/100;return `<div class="row"><div class="grow"><div class="nm">${x.g} g at ${inr(x.r)}</div><div class="mt">${fmtD(x.d)}</div><div class="mt">Base ${inr(b)} + GST ${x.gst||0}% (${inr(t)})</div></div><div class="rt"><div class="amt">${inr(b+t)}</div></div>${del('gold',i)}</div>`}).join(''):'<div class="empty">No gold bought yet.</div>'}</div>
+ <form data-k="gold"><input name="d" type="date" value="${T0}" required><input name="g" type="number" inputmode="decimal" step="any" placeholder="Grams" required><input name="r" type="number" inputmode="decimal" step="any" placeholder="Rate ₹/g" required><input name="gst" type="number" inputmode="decimal" step="any" value="3" placeholder="GST %"><button class="btn">Add</button></form>
+ <div class="card" style="margin-top:12px"><div class="hr"><div class="lbl">Today's 24K rate</div><div class="f" style="color:var(--a1)">${base?inr(incl)+' /g':'—'}</div></div>
+  <div class="fields"><input id="grate" type="number" inputmode="decimal" step="any" value="${base||''}" placeholder="Base ₹ per gram"><input id="ggst" type="number" inputmode="decimal" step="any" value="${gg}" placeholder="GST %"></div>
+  <div class="stats3" style="margin-top:12px"><div><div class="lbl">Base</div><b>${inr(base)}</b></div><div><div class="lbl">GST ${gg}%</div><b>${inr(gst)}</b></div><div><div class="lbl">With GST</div><b>${inr(incl)}</b></div></div>
+  ${S.gold.length&&base?`<small style="display:block;margin-top:10px">Your ${+g.toFixed(3)} g is worth ${inr(g*incl)} today.</small>`:''}
+ </div>`}
 
-function debtBlock(){var owe=sum(S.debts.filter(d=>d.dir=='owe'),d=>Math.max(0,d.a-(d.p||0))),due=sum(S.debts.filter(d=>d.dir=='due'),d=>Math.max(0,d.a-(d.p||0)));
- return `<h2>🤝 Debts</h2><div class="card">${S.debts.length?S.debts.map((d,i)=>{var rem=d.a-(d.p||0);return `<div class="row"><div class="grow">${esc(d.n)}<small>${d.dir=='owe'?'I owe':'Owed to me'} · total ${inr(d.a)}</small><small class="${rem<=0?'p':''}">${rem<=0?'✅ Settled':'Remaining '+inr(rem)}</small></div><input class="cv" data-dp="${i}" type="number" inputmode="decimal" step="any" value="${d.p||0}" aria-label="Paid so far">${del('debts',i)}</div>`}).join(''):'<div class="empty">No debts. Add money you owe or are owed.</div>'}
- <div class="row tot"><div class="grow">I owe<small>Remaining</small></div><div class="amt n">${inr(owe)}</div></div><div class="row tot"><div class="grow">Owed to me<small>Remaining</small></div><div class="amt p">${inr(due)}</div></div></div>
- <form data-k="debts"><input name="n" placeholder="Name" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><select name="dir"><option value="owe">I owe</option><option value="due">Owed to me</option></select><button class="btn">Add</button></form>
- <p class="mute" style="margin:6px 0 0">"Paid so far" wale box me amount badlo. Debts net worth me nahi jaate.</p>`}
+function insView(){
+ if(!S.ins.length)return `<div class="card"><div class="empty" style="padding-top:4px">No insurance policy added yet.</div></div>
+  <form data-k="ins" style="margin-top:0"><input name="n" placeholder="Policy name" required><input name="p" type="number" inputmode="decimal" step="any" placeholder="Premium per payment ₹" required><select name="f">${Object.keys(FQ).map(k=>`<option value="${k}">${FQ[k][0]}</option>`).join('')}</select><input name="sa" type="number" inputmode="decimal" step="any" placeholder="Sum assured ₹"><label class="lb" style="flex:1 1 100%">Maturity date<input name="m" type="date"></label><button class="btn">Add policy</button></form>`;
+ var p=S.ins[0],T0=today(),fk=p.f||'yearly',f=FQ[fk],last=p.pay.map(x=>x.d).sort().pop(),due=last?addMo(last,f[1]):T0,
+ dd=Math.round((new Date(due+'T00:00:00')-new Date(T0+'T00:00:00'))/864e5),
+ paid=sum(p.pay.filter(x=>x.d.startsWith(Y)),x=>x.a),
+ st=dd<0?`<span class="pill r">Overdue by ${-dd} day${-dd==1?'':'s'}</span>`:dd<=30?`<span class="pill a">Due in ${dd} day${dd==1?'':'s'}</span>`:`<span class="pill g">Next due ${fmtD(due)}</span>`;
+ return `<div class="card">
+  <div class="hr"><div class="grow"><b class="f" style="font-size:18px">${esc(p.n)}</b><small style="display:block">${inr(p.p)} ${f[0].toLowerCase()}${p.sa?' · sum assured '+inr(p.sa):''}</small></div>${del('ins',0)}</div>
+  <div class="summary" style="margin-top:14px"><div class="s"><small>Paid ${Y}</small><b>${inr(paid)}</b></div><div class="s" style="text-align:right">${st}</div></div>
+  <div class="fields" style="grid-template-columns:1fr 1fr">
+   <select data-fq="0">${Object.keys(FQ).map(k=>`<option value="${k}"${fk==k?' selected':''}>${FQ[k][0]}</option>`).join('')}</select>
+   <button class="btn" data-act="paynow" data-i="0">Paid today</button>
+  </div>
+ </div>
+ <form data-k="inspay" style="margin-top:10px"><input type="hidden" name="i" value="0"><input name="d" type="date" value="${T0}" required><input name="a" type="number" inputmode="decimal" step="any" value="${p.p}" required><button class="btn">Add payment</button></form>
+ <div class="card" style="margin-top:10px">${p.pay.length?p.pay.map((x,j)=>({x,j})).sort((a,b)=>a.x.d<b.x.d?1:-1).map(({x,j})=>`<div class="row"><div class="grow"><b>${inr(x.a)}</b><small>${fmtD(x.d)}</small></div><button class="ico" data-act="edit" data-k="ins" data-i="0" data-j="${j}" aria-label="Edit">${ICO_EDIT}</button><button class="ico d" data-act="delpay" data-k="ins" data-i="0" data-j="${j}" aria-label="Remove">${ICO_DEL}</button></div>`).join(''):'<div class="empty">No payments yet.</div>'}</div>`}
 
-function goldBlock(){var T0=today(),g=sum(S.gold,x=>x.g),cost=sum(S.gold,x=>x.g*x.r*(1+(x.gst||0)/100)),gv=goldVal(),
- gg=S.goldGst==null?3:S.goldGst,base=S.goldRate||0,gst=base*gg/100,incl=base+gst;
- return `<h2>🪙 Gold ledger</h2><div class="card">${S.gold.length?S.gold.map((x,i)=>{var b=x.g*x.r,t=b*(x.gst||0)/100;return `<div class="row"><div class="grow">${x.g} gm @ ${inr(x.r)}<small>${fmtD(x.d)} · Base ${inr(b)} + GST ${x.gst||0}% ${inr(t)}</small></div><div class="amt">${inr(b+t)}</div>${del('gold',i)}</div>`}).join(''):'<div class="empty">No gold bought yet.</div>'}
- <div class="row tot"><div class="grow">${+g.toFixed(3)} gm<small>Cost incl. GST ${inr(cost)}</small></div><div class="r"><div class="amt">${inr(gv)}</div><small class="${cls(gv-cost)}">${pn(gv-cost,cost)}</small></div></div></div>
- <form data-k="gold"><input name="d" type="date" value="${T0}" required><input name="g" type="number" inputmode="decimal" step="any" placeholder="Gold (gm)" required><input name="r" type="number" inputmode="decimal" step="any" placeholder="Rate ₹/gm" required><input name="gst" type="number" inputmode="decimal" step="any" value="3" placeholder="GST %"><button class="btn">Add</button></form>
- <div class="card pad" style="margin-top:8px"><div class="hr"><span>🪙 Today's 24K rate</span><b class="f">${base?inr(incl)+'/gm':'—'}</b></div>
- <div class="g2"><label>Base ₹/gm<input id="grate" type="number" inputmode="decimal" step="any" value="${base||''}" placeholder="e.g. 14500"></label><label>GST %<input id="ggst" type="number" inputmode="decimal" step="any" value="${gg}"></label></div>
- <div class="kv"><div><small>Base rate</small><b>${inr(base)}</b></div><div><small>GST ${gg}%</small><b>${inr(gst)}</b></div></div>
- <small style="display:block;margin-top:8px">Price per gm incl. GST: <b>${inr(incl)}</b>${S.gold.length&&base?` · Tera ${+g.toFixed(3)} gm = <b>${inr(g*incl)}</b>`:''}</small></div>`}
+function fdView(){var L=S.fds.map((f,i)=>[f,i]).sort((a,b)=>a[0].m<b[0].m?-1:1),T=Date.now();
+ return `<div class="card">${L.length?L.map(([f,i])=>{var dl=Math.ceil((new Date(f.m)-T)/864e5);return `<div class="row"><div class="grow"><div class="nm">${esc(f.n)}</div><div class="mt">${inr(f.a)} · ${f.r?f.r+'% p.a.':'rate not set'}</div><div class="mt">Matures ${fmtD(f.m)}</div></div><div class="rt"><div class="amt">${inr(fdEnd(f))}</div><span class="pill ${dl<=0?'g':dl<=30?'a':''}">${dl<=0?'Matured':dl+' days'}</span></div>${del('fds',i)}</div>`}).join(''):'<div class="empty">No fixed deposits yet.</div>'}</div>
+ <form data-k="fds"><input name="n" placeholder="Bank" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><input name="r" type="number" inputmode="decimal" step="any" placeholder="Rate %"><label class="lb">Start date<input name="s" type="date"></label><label class="lb">Maturity date<input name="m" type="date" required></label><button class="btn">Add FD</button></form>`}
+
+function sipView(){return `<div class="card"><div class="stats3"><div><div class="lbl">Per month</div><b>${inr(sum(S.sip,x=>x.a))}</b></div></div></div>
+ <div class="card" style="margin-top:10px">${S.sip.length?S.sip.map((x,i)=>`<div class="row"><div class="grow"><div class="nm">${esc(x.n)}</div></div><div class="amt">${inr(x.a)}</div>${del('sip',i)}</div>`).join(''):'<div class="empty">No SIPs yet.</div>'}</div>
+ <form data-k="sip"><input name="n" placeholder="Fund name" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Monthly ₹" required><button class="btn">Add</button></form>`}
+
+function debtView(){var owe=sum(S.debts.filter(d=>d.dir=='owe'),d=>Math.max(0,d.a-(d.p||0))),due=sum(S.debts.filter(d=>d.dir=='due'),d=>Math.max(0,d.a-(d.p||0)));
+ return `<div class="card"><div class="stats3"><div><div class="lbl">I owe</div><b class="n">${inr(owe)}</b></div><div><div class="lbl">Owed to me</div><b class="p">${inr(due)}</b></div></div></div>
+ <div class="card" style="margin-top:10px">${S.debts.length?S.debts.map((d,i)=>{var rem=d.a-(d.p||0);return `<div class="row"><div class="grow"><div class="nm">${esc(d.n)}</div><div class="mt">${d.dir=='owe'?'I owe':'Owed to me'} · total ${inr(d.a)}</div></div><div class="rt"><input class="cv" data-dp="${i}" type="number" inputmode="decimal" step="any" value="${d.p||0}" aria-label="Paid so far"><span class="pill ${rem<=0?'g':''}">${rem<=0?'Settled':inr(rem)+' left'}</span></div>${del('debts',i)}</div>`}).join(''):'<div class="empty">No debts recorded.</div>'}</div>
+ <form data-k="debts"><input name="n" placeholder="Name" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><select name="dir"><option value="owe">I owe</option><option value="due">Owed to me</option></select><button class="btn">Add</button></form>`}
 
 function invest(){
- var sip=sum(S.sip,x=>x.a);
- return `<h2>🔁 SIP tracker</h2><div class="card">${S.sip.length?S.sip.map((x,i)=>`<div class="row"><div class="grow">${esc(x.n)}</div><div class="amt">${inr(x.a)}</div>${del('sip',i)}</div>`).join(''):'<div class="empty">No SIPs yet.</div>'}<div class="row tot"><div class="grow">Per month</div><div class="amt">${inr(sip)}</div></div></div>
- <form data-k="sip"><input name="n" placeholder="Fund name" required><input name="a" type="number" inputmode="decimal" step="any" placeholder="Monthly ₹" required><button class="btn">Add SIP</button></form>`
- +insBlock()+fdBlock()+hold('mf','📈 Mutual funds')+hold('st','📊 Stocks')+debtBlock()+goldBlock()}
+ var subs=[['mf','Funds'],['st','Stocks'],['gold','Gold'],['fd','FDs'],['sip','SIP'],['ins','Insurance'],['debt','Debts']],body;
+ if(sub=='mf')body=holdView('mf','Funds');
+ else if(sub=='st')body=holdView('st','Stocks');
+ else if(sub=='gold')body=goldView();
+ else if(sub=='fd')body=fdView();
+ else if(sub=='sip')body=sipView();
+ else if(sub=='ins')body=insView();
+ else body=debtView();
+ return `<div class="chips">${subs.map(s=>`<button class="chip ${sub==s[0]?'on':''}" data-act="sub" data-s="${s[0]}">${s[1]}</button>`).join('')}</div><div class="fade">${body}</div>`}
 
-var T=[['home','🏠','Base'],['months','📅','Months'],['spend','💸','Spend'],['invest','📈','Invest']];
-function header(){return `<div class="top"><div class="tl"><div>🎮 LOOT <span>VAULT</span></div><button class="qa" data-act="fab" aria-label="Quick add expense">＋</button></div>
- <div class="status">${OK?'<i style="color:var(--gr)">●</i> Saved on this phone':'<i class="n">●</i> Not saving'} · ${new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div>
- <div class="tabs">${T.map(t=>`<button data-act="tab" data-t="${t[0]}"${tab==t[0]?' class="on"':''}><span>${t[1]}</span>${t[2]}</button>`).join('')}</div></div>`}
+/* ---------- shell ---------- */
+var T=[['home','🏠','Home'],['months','📅','Months'],['spend','💸','Spend'],['invest','📈','Invest']];
+function header(){return `<div class="top"><div class="tl"><div>🎮 LOOT <span>VAULT</span></div><button class="qa" data-act="fab" aria-label="Add expense">+</button></div>
+ <div class="status">${OK?'Saved on this device':'Storage unavailable — data will not persist'} · ${new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div></div>`}
+function dock(){return `<nav class="dock">${T.map(t=>`<button data-act="tab" data-t="${t[0]}" class="${tab==t[0]?'on':''}" aria-label="${t[2]}"><span class="di">${t[1]}</span>${t[2]}</button>`).join('')}</nav>`}
 function render(){
  document.documentElement.dataset.t=S.theme||'noir';
- document.getElementById('app').innerHTML=header()+({home,months,spend,invest})[tab]();
+ document.getElementById('app').innerHTML=header()+({home,months,spend,invest})[tab]()+dock();
 }
-function go(t){tab=t;render();var A=document.getElementById('app');A.classList.remove('in');void A.offsetWidth;A.classList.add('in');scrollTo(0,0)}
-function sheet(o){var s=document.getElementById('sheet');if(o)s.firstElementChild.innerHTML=`<h2 style="margin-top:0">⚡ Quick add expense</h2>`+expForm(today());s.classList.toggle('open',!!o)}
+function go(t){tab=t;achSel=achSel;render();scrollTo(0,0)}
+function sheet(o){var s=document.getElementById('sheet');if(o)s.firstElementChild.innerHTML=`<h2>Add expense</h2>`+expForm(today());s.classList.toggle('open',!!o)}
 
 /* ---------- events ---------- */
 document.addEventListener('submit',ev=>{var f=ev.target,k=f.dataset.k;if(!k)return;ev.preventDefault();var v=Object.fromEntries(new FormData(f));
- if(k=='edit'){if(!applyEdit(v))return}
- else if(k=='opening'||k=='sip')S[k].push({n:v.n.trim(),a:+v.a});
- else if(k=='exp'){if(isClosed(v.d.slice(0,7))){toast('🔒 Ye month band hai, pehle Reopen karo');return}S.exp.push({d:v.d,c:v.c,n:v.n.trim(),a:+v.a});selM=v.d.slice(0,7)}
- else if(k=='gold')S.gold.push({d:v.d,g:+v.g,r:+v.r,gst:+v.gst||0});
- else if(k=='mf'||k=='st')S[k].push({n:v.n.trim(),i:+v.i,c:v.c===''||v.c==null?+v.i:+v.c});
- else if(k=='months'){if(S.months.some(o=>o.k==v.k)){toast('Ye month pehle se hai');return}
+ if(k=='edit'){if(!applyEdit(v))return;toast('Updated')}
+ else if(k=='opening'||k=='sip'){S[k].push({n:v.n.trim(),a:+v.a});toast('Added')}
+ else if(k=='exp'){if(isClosed(v.d.slice(0,7))){toast('This month is closed');return}S.exp.push({d:v.d,c:v.c,n:(v.n||'').trim()||v.c,a:+v.a});selM=v.d.slice(0,7);toast('Expense added')}
+ else if(k=='gold'){S.gold.push({d:v.d,g:+v.g,r:+v.r,gst:+v.gst||0});toast('Gold added')}
+ else if(k=='mf'||k=='st'){S[k].push({n:v.n.trim(),i:+v.i,c:v.c===''||v.c==null?+v.i:+v.c});toast('Added')}
+ else if(k=='months'){if(S.months.some(o=>o.k==v.k)){toast('Month already exists');return}
    var prev=S.months.filter(o=>o.k<v.k).sort((a,b)=>a.k<b.k?1:-1)[0];
-   S.months.push({k:v.k,salary:prev?prev.salary||0:0,planned:prev?prev.planned||0:0,budget:0});selM=v.k}
- else if(k=='rec'){S.rec.push({n:v.n.trim(),c:v.c,a:+v.a,day:+v.day||1,last:''});applyRec()}
- else if(k=='debts')S.debts.push({n:v.n.trim(),a:+v.a,p:0,dir:v.dir});
- else if(k=='fds')S.fds.push({n:v.n.trim(),a:+v.a,r:+v.r||0,s:v.s,m:v.m});
- else if(k=='ins')S.ins.push({n:v.n.trim(),p:+v.p,f:v.f||'yearly',sa:+v.sa||0,m:v.m||'',pay:[]});
- else if(k=='inspay')S.ins[+v.i].pay.push({d:v.d,a:+v.a});
- else if(k=='goals')S.goals.push({n:v.n.trim(),t:+v.t||1,s:0});
- save();sheet(false);render();toast(k=='edit'?'✏️ Updated':'✅ Saved')});
+   S.months.push({k:v.k,salary:prev?prev.salary||0:0,planned:prev?prev.planned||0:0,budget:0,mexp:0});toast('Month added')}
+ else if(k=='rec'){S.rec.push({n:v.n.trim(),c:v.c,a:+v.a,day:+v.day||1,last:''});applyRec();toast('Recurring added')}
+ else if(k=='debts'){S.debts.push({n:v.n.trim(),a:+v.a,p:0,dir:v.dir});toast('Added')}
+ else if(k=='fds'){S.fds.push({n:v.n.trim(),a:+v.a,r:+v.r||0,s:v.s,m:v.m});toast('FD added')}
+ else if(k=='ins'){if(S.ins.length){toast('Only one policy is allowed');return}S.ins.push({n:v.n.trim(),p:+v.p,f:v.f||'yearly',sa:+v.sa||0,m:v.m||'',pay:[]});toast('Policy added')}
+ else if(k=='inspay'){S.ins[+v.i].pay.push({d:v.d,a:+v.a});toast('Payment added')}
+ else if(k=='goals'){S.goals.push({n:v.n.trim(),t:+v.t||1,s:0});toast('Goal added')}
+ save();sheet(false);render()});
 
 document.addEventListener('change',ev=>{var t=ev.target,d=t.dataset,v=+t.value||0;
  if(t.id=='msel'){selM=t.value;render();return}
- if(d.fq!==undefined)S.ins[+d.fq].f=t.value;
+ if(d.fq!==undefined){S.ins[+d.fq].f=t.value}
  else if(d.sal!==undefined){if(isClosed(d.sal))return;ensureM(d.sal).salary=v}
  else if(d.plan!==undefined){if(isClosed(d.plan))return;ensureM(d.plan).planned=v}
  else if(d.mex!==undefined){if(isClosed(d.mex))return;ensureM(d.mex).mexp=v}
- else if(t.id=='bud'){if(isClosed(selM||CUR()))return;ensureM(selM||CUR()).budget=v}
+ else if(t.id=='bud'){var k=selM||CUR();if(isClosed(k))return;ensureM(k).budget=v}
  else if(d.cv){var p=d.cv.split(',');S[p[0]][+p[1]].c=v}
  else if(d.gs!==undefined)S.goals[+d.gs].s=v;
+ else if(t.id=='gname')S.goalName=t.value;
  else if(t.id=='target')S.target=v;
  else if(t.id=='reserve')S.reserve=v;
  else if(d.dp!==undefined)S.debts[+d.dp].p=v;
  else if(t.id=='grate')S.goldRate=v;
  else if(t.id=='ggst')S.goldGst=v;
- else if(t.id=='file'&&t.files[0]){var r=new FileReader();r.onload=()=>{try{var x=JSON.parse(r.result);if(!x||!Array.isArray(x.exp))throw 0;S=migrate(x);save();render();toast('✅ Backup restored')}catch(e){toast('⚠️ Ye valid backup file nahi hai')}};r.readAsText(t.files[0]);return}
+ else if(t.id=='file'&&t.files[0]){var r=new FileReader();r.onload=()=>{try{var x=JSON.parse(r.result);if(!x||!Array.isArray(x.exp))throw 0;S=migrate(x);save();render();toast('Backup restored')}catch(e){toast('Not a valid backup file')}};r.readAsText(t.files[0]);return}
  else return;
  save();render()});
 
 document.addEventListener('click',ev=>{if(ev.target.id=='sheet')return sheet(false);var b=ev.target.closest('[data-act]');if(!b)return;
  var a=b.dataset.act,k=b.dataset.k,i=b.dataset.i,j=b.dataset.j;
- if(a=='tab')go(b.dataset.t);
- if(a=='fab')sheet(true);
+ if(a=='tab')return go(b.dataset.t);
+ if(a=='sub'){sub=b.dataset.s;render();return}
+ if(a=='ach'){achSel=achSel==+i?-1:+i;render();return}
+ if(a=='fab')return sheet(true);
  if(a=='closesheet')return sheet(false);
  if(a=='edit')return openEdit(k,i,j);
- if(a=='del'){if(k=='exp'){var e=S.exp[+i];if(e&&isClosed(e.d.slice(0,7))){toast('🔒 Ye month band hai');return}}
-   if(confirm('Ye entry delete karu?')){S[k].splice(+i,1);save();render();toast('🗑 Deleted')}}
- if(a=='delpay'&&confirm('Ye payment hatau?')){S[k][+i].pay.splice(+j,1);save();render();toast('🗑 Removed')}
- if(a=='delm'&&confirm('Is month ka salary, savings aur budget hata du? Expenses rahenge.')){S.months=S.months.filter(o=>o.k!=i);save();render()}
- if(a=='closem'&&confirm(mlabel(i)+' band kar du? Phir isme change nahi hoga (Reopen se khul sakta hai).')){S.closed.push(i);save();render();toast('🔒 '+mlabel(i)+' closed')}
- if(a=='reopen'){S.closed=S.closed.filter(x=>x!=i);save();render();toast('🔓 Reopened')}
- if(a=='mprev'||a=='mnext'){var L=allKeys(),ix=L.indexOf(selM||CUR()),n=L[ix+(a=='mprev'?-1:1)];if(n){selM=n;render()}}
- if(a=='paynow'){var p=S.ins[+i];if(p.pay.some(x=>x.d==today())&&!confirm('Aaj ka premium pehle hi daal chuka hai. Phir se add karu?'))return;p.pay.push({d:today(),a:p.p});save();render();toast('✅ Premium recorded')}
- if(a=='theme'){S.theme=b.dataset.t;save();render()}
- if(a=='export'){S.lastBackup=today();save();dl(JSON.stringify(S,null,1),'loot-vault-backup-'+today()+'.json','application/json');render()}
- if(a=='import')document.getElementById('file').click();
- if(a=='csv')downloadCSV()});
+ if(a=='del'){if(k=='exp'){var e=S.exp[+i];if(e&&isClosed(e.d.slice(0,7))){toast('This month is closed');return}}
+   if(confirm('Delete this entry?')){S[k].splice(+i,1);save();render();toast('Deleted')}return}
+ if(a=='delpay'&&confirm('Remove this payment?')){S[k][+i].pay.splice(+j,1);save();render();toast('Removed');return}
+ if(a=='delm'&&confirm('Delete this month? Its salary, savings and emergency values will be removed.')){S.months=S.months.filter(o=>o.k!=i);S.closed=S.closed.filter(x=>x!=i);save();render();toast('Month deleted');return}
+ if(a=='closem'&&confirm('Close '+mlabel(i)+'? It will be locked until you reopen it.')){S.closed.push(i);save();render();toast(mlabel(i)+' closed');return}
+ if(a=='reopen'){S.closed=S.closed.filter(x=>x!=i);save();render();toast('Month reopened');return}
+ if(a=='mprev'||a=='mnext'){var L=allKeys(),ix=L.indexOf(selM||CUR()),n=L[ix+(a=='mprev'?-1:1)];if(n){selM=n;render()}return}
+ if(a=='paynow'){var p=S.ins[+i];if(p.pay.some(x=>x.d==today())&&!confirm('A payment for today already exists. Add another?'))return;p.pay.push({d:today(),a:p.p});save();render();toast('Premium recorded');return}
+ if(a=='theme'){S.theme=b.dataset.t;save();render();return}
+ if(a=='export'){S.lastBackup=today();save();dl(JSON.stringify(S,null,1),'loot-vault-backup-'+today()+'.json','application/json');render();toast('Backup exported');return}
+ if(a=='import')return document.getElementById('file').click();
+ if(a=='csv')return downloadCSV()});
 
 function dl(txt,name,type){var u=URL.createObjectURL(new Blob([txt],{type:type})),l=document.createElement('a');l.href=u;l.download=name;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-function downloadCSV(){var rows=[['Section','Date','Name','Category','Amount','Extra']];
- S.exp.forEach(e=>rows.push(['Expense',e.d,e.n,e.c||'',e.a,'']));
- allKeys().forEach(k=>{var o=getM(k);rows.push(['Month',k,'Salary','',o.salary||0,'']);rows.push(['Month',k,'Planned savings','',o.planned||0,'']);rows.push(['Month',k,'Emergency expense','',o.mexp||0,'']);rows.push(['Month',k,'Actual savings','',actual(k),'Budget '+(o.budget||0)+(isClosed(k)?' (closed)':'')])});
+function downloadCSV(){var rows=[['Section','Date','Name','Category','Amount','Note']];
+ S.exp.forEach(e=>rows.push(['Expense',e.d,e.n,cname(e.c),e.a,e.auto?'auto':'']));
+ monthKeys().forEach(k=>{var o=getM(k);rows.push(['Month',k,'Salary','',o.salary||0,'']);rows.push(['Month',k,'Planned savings','',o.planned||0,'']);rows.push(['Month',k,'Emergency expense','',mOut(k),'']);rows.push(['Month',k,'Actual savings','',actual(k),isClosed(k)?'closed':'open'])});
  S.ins.forEach(p=>p.pay.forEach(x=>rows.push(['Insurance',x.d,p.n,'',x.a,p.f||'yearly'])));
  S.fds.forEach(f=>rows.push(['FD',f.m,f.n,'',f.a,(f.r||0)+'% from '+(f.s||'')]));
- S.mf.forEach(x=>rows.push(['Mutual fund','',x.n,'',x.c,'invested '+x.i]));
+ S.mf.forEach(x=>rows.push(['Fund','',x.n,'',x.c,'invested '+x.i]));
  S.st.forEach(x=>rows.push(['Stock','',x.n,'',x.c,'invested '+x.i]));
  S.sip.forEach(x=>rows.push(['SIP','',x.n,'',x.a,'monthly']));
- S.gold.forEach(x=>rows.push(['Gold',x.d,x.g+' gm','',x.g*x.r*(1+(x.gst||0)/100),'@ '+x.r+' + GST '+(x.gst||0)+'%']));
+ S.gold.forEach(x=>rows.push(['Gold',x.d,x.g+' g','',x.g*x.r*(1+(x.gst||0)/100),'@ '+x.r+' + GST '+(x.gst||0)+'%']));
  S.debts.forEach(d=>rows.push(['Debt','',d.n,d.dir,d.a,'paid '+(d.p||0)]));
  S.opening.forEach(x=>rows.push(['Opening savings','',x.n,'',x.a,'']));
- var txt=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
- dl(txt,'loot-vault-'+today()+'.csv','text/csv')}
+ dl(rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n'),'loot-vault-'+today()+'.csv','text/csv')}
 
 var tx,ty;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
-document.addEventListener('touchend',e=>{var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty,L=T.map(t=>t[0]),j=L.indexOf(tab)+(dx<0?1:-1);
+document.addEventListener('touchend',e=>{var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty,L=T.map(q=>q[0]),j=L.indexOf(tab)+(dx<0?1:-1);
  if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||Math.abs(dx)<80||Math.abs(dy)>60||document.getElementById('sheet').classList.contains('open'))return;if(L[j])go(L[j])},{passive:true});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')sheet(false)});
 
