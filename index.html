@@ -115,7 +115,7 @@ input:disabled{opacity:.45}
 .tabs button{min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;font:500 14px Inter,system-ui;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;height:40px;padding:0 6px;cursor:pointer;white-space:nowrap;overflow:hidden;transition:.2s}
 .tabs button.on{color:#140e04;background:linear-gradient(90deg,var(--a1),var(--a3));border-color:transparent;font-weight:600}
 .tabs button span{font-size:15px}
-.fade{animation:fade .3s ease}@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+.fade{animation:fade .3s ease}@keyframes fade{from{opacity:0;transform:translateX(14px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .tlbl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
 .tic{width:28px;height:28px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;background:var(--card);border:1px solid var(--line);flex:none}
@@ -144,15 +144,29 @@ input:disabled{opacity:.45}
 .kp button:active{background:var(--gl)}.kp i{display:block}
 #lock.shake #dots{animation:shk .35s}@keyframes shk{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .srch{width:100%;margin:0 0 10px}
+.bar i{animation:grow .8s cubic-bezier(.2,.8,.2,1)}@keyframes grow{from{width:0}}
+.dock{gap:0!important}
+.dock button{position:relative;z-index:1}
+.dock button.on{background:none!important;color:#140e04!important;box-shadow:none!important}
+.dock .ind{position:absolute;top:7px;bottom:7px;left:7px;width:calc((100% - 14px)/4);border-radius:21px;background:linear-gradient(135deg,var(--a1),var(--a3));box-shadow:0 8px 22px var(--gl);transform:translateX(calc(var(--i,0) * 100%));transition:transform .45s cubic-bezier(.2,.9,.3,1.15);z-index:0}
+.qchips{display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-bottom:10px}
+.qchips button{background:var(--card2);border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:6px 12px;font:500 13px Inter,system-ui;cursor:pointer;transition:.2s}
+.qchips button:hover{color:var(--ink);border-color:var(--a1)}
+.qchips button:active{background:var(--gl);transform:scale(.96)}
+.empty2{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 10px;gap:6px}
+.empty2 span{font-size:34px;margin-bottom:4px}.empty2 b{font-weight:600}.empty2 small{color:var(--mute)}
+.onb{border-color:var(--a1);margin-bottom:12px}
+.onbl div{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}.onbl div:last-child{border-bottom:0}
+.onbl b{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--gl);color:var(--a1);align-items:center;justify-content:center;margin-right:8px;font-size:13px}
 </style></head>
-<body><main id="app"></main><div id="sheet"><div></div></div><div id="toast"></div>
+<body><main id="app"></main><div id="sheet"><div></div></div><div id="toast"></div><nav class="dock" id="dock"></nav>
 <div id="lock"><div class="lk-t">🔐 Loot Vault</div><div class="lk-s">Enter your PIN</div><div id="dots"><span></span><span></span><span></span><span></span></div><div class="kp"><button data-act="pk" data-d="1">1</button><button data-act="pk" data-d="2">2</button><button data-act="pk" data-d="3">3</button><button data-act="pk" data-d="4">4</button><button data-act="pk" data-d="5">5</button><button data-act="pk" data-d="6">6</button><button data-act="pk" data-d="7">7</button><button data-act="pk" data-d="8">8</button><button data-act="pk" data-d="9">9</button><i></i><button data-act="pk" data-d="0">0</button><button data-act="pk" data-d="b" aria-label="Backspace">⌫</button></div></div>
 <script>
 var ICO_EDIT='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',
 ICO_DEL='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>';
 var KEY='paisa-tracker-v1',Y=new Date().getFullYear(),MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-CATS=[['Food','🍔'],['Groceries','🛒'],['Bills','💡'],['Rent','🏠'],['Travel','✈️'],['Fuel','⛽'],['Shopping','🛍️'],['Fun & Games','🎮'],['Splitwise','🧾'],['Health','💊'],['EMI','💳'],['Other','📦']],
-FIXED=['Rent','Splitwise'],
+CATS=[['Food','🍔'],['Groceries','🛒'],['Bills','💡'],['Rent','🏠'],['Travel','✈️'],['Fuel','⛽'],['Shopping','🛍️'],['Fun & Games','🎮'],['Splitwise','🧾'],['Credit card bill','💳'],['Health','💊'],['EMI','🏦'],['Other','📦']],
+FIXED=['Rent','Splitwise','Credit card bill'],
 FQ={yearly:['Yearly',12],half:['Half-yearly',6],quarterly:['Quarterly',3],monthly:['Monthly',1]},
 THEMES=[['noir','#f2c14e','Gold'],['ocean','#48cfff','Ocean'],['crimson','#ff5a6a','Crimson'],['sunset','#ff9e4a','Sunset'],['rose','#ff6fa3','Rose'],['slate','#c9d6e3','Slate']],
 tab='home',sub='mf',selM=null,achSel=-1;
@@ -178,7 +192,7 @@ CUR=()=>today().slice(0,7),
 fmtD=d=>d?new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'',
 mlabel=k=>MO[+k.slice(5)-1]+' '+k.slice(0,4),
 addMK=(k,n)=>{var d=new Date(+k.slice(0,4),+k.slice(5,7)-1+n,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')},
-toast=(m,u)=>{var t=document.getElementById('toast');t.innerHTML='<span></span>'+(u?'<button data-act="undo">Undo</button>':'');t.firstChild.textContent=m;toast.u=u||null;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>{t.classList.remove('on');toast.u=null},u?5000:2100)};
+toast=(m,u)=>{if(navigator.vibrate)navigator.vibrate(12);var t=document.getElementById('toast');t.innerHTML='<span></span>'+(u?'<button data-act="undo">Undo</button>':'');t.firstChild.textContent=m;toast.u=u||null;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>{t.classList.remove('on');toast.u=null},u?5000:2100)};
 function cname(c){if(!c)return'Other';var f=CATS.find(x=>c.endsWith(x[0]));if(f)return f[0];c=c.replace(/^\S+\s/,'');return c=='Fun'?'Fun & Games':c}
 function cicon(n){var f=CATS.find(x=>x[0]==n);return f?f[1]:'📦'}
 
@@ -259,17 +273,22 @@ function applyEdit(v){var k=v._k,i=v._i,j=v._j,hasJ=j!=='',sc=hasJ?SCH.pay:SCH[k
 
 /* ---------- forms ---------- */
 function catOpts(sel){return CATS.map(c=>`<option value="${c[0]}"${sel==c[0]?' selected':''}>${c[1]} ${c[0]}</option>`).join('')}
-function expForm(d){return `<form data-k="exp" style="margin-top:0"><input name="d" type="date" value="${d||today()}" required><select name="c">${catOpts('Food')}</select><input name="n" placeholder="Note (optional)"><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><button class="btn">Add expense</button></form>`}
+function qChips(){var cnt={};S.exp.forEach(e=>{if(e.auto||!e.n)return;var k=e.n.trim();cnt[k]=(cnt[k]||0)+1});var notes=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).slice(0,5);
+ return `<div class="qchips">${[100,200,500,1000].map(v=>`<button type="button" data-act="amt" data-v="${v}">₹${v}</button>`).join('')}${notes.map(n=>`<button type="button" data-act="note" data-v="${esc(n)}">${esc(n)}</button>`).join('')}</div>`}
+function expForm(d){return `${qChips()}<form data-k="exp" style="margin-top:0"><input name="d" type="date" value="${d||today()}" required><select name="c">${catOpts('Food')}</select><input name="n" placeholder="Note (optional)"><input name="a" type="number" inputmode="decimal" step="any" placeholder="Amount ₹" required><button class="btn">Add expense</button></form>`}
 
 /* ---------- Home ---------- */
+function emptyBox(i,t,s){return `<div class="empty2"><span>${i}</span><b>${t}</b><small>${s}</small></div>`}
+function onb(){if(localStorage.getItem('lv-onb')||S.months.length||S.exp.length||S.opening.length)return '';
+ return `<div class="card onb"><div class="lbl" style="color:var(--a1)">Get started</div><div class="onbl" style="margin-top:8px"><div><b>1</b>Add your opening savings below</div><div><b>2</b>Set salary and planned savings in Months</div><div><b>3</b>Tap + to log every expense</div></div><button class="btn" data-act="onbdone" style="margin-top:12px">Got it</button></div>`}
 function home(){
  var s=stats(),p=clamp(s.goal/(S.target||1)*100),xp=Math.max(s.nw,0)%1e5/1e3,tt=sum(s.parts,q=>Math.max(q[1],0))||1,
  A=achievements(),won=A.filter(a=>a.ok).length;
  var nag=(S.exp.length+S.months.length)>=5&&(!S.lastBackup||(Date.now()-new Date(S.lastBackup))/864e5>14);
  return `<div class="fade">
  
- <section class="hero">
-  <div class="hr"><div><div class="lbl">Net worth</div><div class="big">${inr(s.nw)}</div></div><div class="ring" style="--p:${xp*3.6}deg"><b>${s.lv}</b><small>Level</small></div></div>
+ ${onb()}<section class="hero">
+  <div class="hr"><div><div class="lbl">Net worth</div><div class="big" data-count="${Math.round(s.nw)}">${inr(s.nw)}</div></div><div class="ring" style="--p:${xp*3.6}deg"><b>${s.lv}</b><small>Level</small></div></div>
   <div class="stack">${s.parts.map(q=>q[1]>0?`<i style="width:${q[1]/tt*100}%;background:${q[2]}"></i>`:'').join('')}</div>
   <div class="leg">${s.parts.map(q=>`<span><u style="background:${q[2]}"></u>${q[0]}</span>`).join('')}</div>
  </section>
@@ -354,7 +373,7 @@ function months(){
   <div class="fields2"><label>Salary<input data-sal="${k}" type="number" inputmode="decimal" step="any" value="${o.salary||''}" placeholder="0" ${cl?'disabled':''}></label><label>Planned savings<input data-plan="${k}" type="number" inputmode="decimal" step="any" value="${o.planned||''}" placeholder="0" ${cl?'disabled':''}></label></div>
   <div class="fields2"><label>Emergency expense<input data-mex="${k}" type="number" inputmode="decimal" step="any" value="${o.mexp||''}" placeholder="0" ${cl?'disabled':''}></label><div><div class="lbl">Actual savings</div><div class="amt ${cls(ac)}" style="font-size:20px;margin-top:6px">${inr(ac)}</div></div></div>
   <div class="acts">${cl?`<button class="link" data-act="reopen" data-i="${k}">Reopen month</button>`:`<button class="link" data-act="closem" data-i="${k}">Close month</button>`}</div>
- </div>`}).join(''):'<div class="card empty">No months yet. Add one above.</div>'}
+ </div>`}).join(''):'<div class="card">'+emptyBox('📅','No months yet','Add a month above to start tracking.')+'</div>'}
  </div>`}
 
 /* ---------- Spend ---------- */
@@ -370,7 +389,7 @@ function spend(){
  spent=sk=>sum(S.exp.filter(e=>e.d.slice(0,7)==sk),e=>e.a),
  sk2=allKeys().filter(q=>spent(q)>0),avg=sk2.length?sum(sk2,spent)/sk2.length:0,
  fixedRow=n=>{var now=sum(ex.filter(e=>cname(e.c)==n),e=>e.a),pv=sum(S.exp.filter(e=>e.d.slice(0,7)==prevK&&cname(e.c)==n),e=>e.a),dl=now-pv;
-  return `<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${n}</b><small>${pv?(dl>0?`<span class="n">▲ ${inr(dl)}</span> vs last month`:dl<0?`<span class="p">▼ ${inr(-dl)}</span> vs last month`:'same as last month'):'no last-month entry'}</small></div><div class="amt">${inr(now)}</div></div>`},
+  return `<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${n}</b><small>${now==0&&pv==0?'<span>Not this month</span>':pv?(dl>0?`<span class="n">▲ ${inr(dl)}</span> vs last month`:dl<0?`<span class="p">▼ ${inr(-dl)}</span> vs last month`:'same as last month'):'not used last month'}</small></div><div class="amt">${inr(now)}</div></div>`},
  regular={};ex.forEach(e=>{var n=cname(e.c);if(FIXED.indexOf(n)<0)regular[n]=(regular[n]||0)+e.a});
  var rows=Object.keys(regular).sort((a,b)=>regular[b]-regular[a]),mx=rows.length?regular[rows[0]]:1;
  var src=srch.trim()?S.exp.filter(e=>matchQ(e,srch)):ex,groups={};src.slice().sort((a,b)=>a.d<b.d?1:-1).forEach(e=>{(groups[e.d]=groups[e.d]||[]).push(e)});
@@ -390,7 +409,7 @@ function spend(){
  <div class="card">${FIXED.map(fixedRow).join('')}</div>
 
  <div class="sec"><span>By category</span></div>
- <div class="card">${rows.length?rows.map(n=>`<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${n}</b>${bar(regular[n]/mx*100)}</div><div class="amt">${inr(regular[n])}</div></div>`).join(''):'<div class="empty">No expenses this month.</div>'}</div>
+ <div class="card">${rows.length?rows.map(n=>`<div class="row"><div class="ic">${cicon(n)}</div><div class="grow"><b>${n}</b>${bar(regular[n]/mx*100)}</div><div class="amt">${inr(regular[n])}</div></div>`).join(''):emptyBox('🧾','Nothing spent yet','Tap + to add your first expense.')}</div>
 
  ${recBlock()}
 
@@ -402,7 +421,7 @@ function spend(){
 /* ---------- Invest ---------- */
 function holdView(k,title){var a=S[k],i=sum(a,x=>x.i),c=sum(a,x=>x.c),pl=c-i;
  return `<div class="card"><div class="stats3"><div><div class="lbl">Invested</div><b>${inr(i)}</b></div><div><div class="lbl">Current</div><b>${inr(c)}</b></div><div><div class="lbl">Gain / loss</div><b class="${cls(pl)}">${pl>=0?'+':''}${inr(pl)}</b><small class="${cls(pl)}">${pl>=0?'+':''}${pct(pl,i)}%</small></div></div></div>
- <div class="card" style="margin-top:10px">${a.length?a.map((x,j)=>{var d=x.c-x.i;return `<div class="row"><div class="grow"><div class="nm">${esc(x.n)}</div><div class="mt">Invested ${inr(x.i)}</div></div><div class="rt"><input class="cv" data-cv="${k},${j}" type="number" inputmode="decimal" step="any" value="${x.c}" aria-label="Current value"><div class="mt ${cls(d)}" style="margin:0">${d>=0?'+':''}${pct(d,x.i)}%</div></div>${del(k,j)}</div>`}).join(''):`<div class="empty">No ${title.toLowerCase()} yet.</div>`}</div>
+ <div class="card" style="margin-top:10px">${a.length?a.map((x,j)=>{var d=x.c-x.i;return `<div class="row"><div class="grow"><div class="nm">${esc(x.n)}</div><div class="mt">Invested ${inr(x.i)}</div></div><div class="rt"><input class="cv" data-cv="${k},${j}" type="number" inputmode="decimal" step="any" value="${x.c}" aria-label="Current value"><div class="mt ${cls(d)}" style="margin:0">${d>=0?'+':''}${pct(d,x.i)}%</div></div>${del(k,j)}</div>`}).join(''):emptyBox('📈',`No ${title.toLowerCase()} yet`,'Add your first entry below.')}</div>
  <form data-k="${k}"><input name="n" placeholder="Name" required><input name="i" type="number" inputmode="decimal" step="any" placeholder="Invested ₹" required><input name="c" type="number" inputmode="decimal" step="any" placeholder="Current ₹"><button class="btn">Add</button></form>`}
 
 function goldView(){var T0=today(),g=sum(S.gold,x=>x.g),cost=sum(S.gold,x=>x.g*x.r*(1+(x.gst||0)/100)),gv=goldVal(),gg=S.goldGst==null?3:S.goldGst,base=S.goldRate||0,gst=base*gg/100,incl=base+gst;
@@ -466,12 +485,16 @@ function invest(){
 var T=[['home','🏠','Home'],['months','📅','Months'],['spend','💸','Spend'],['invest','📈','Invest']];
 function header(){return `<div class="top"><div class="tl"><div>🎮 LOOT <span>VAULT</span></div><button class="qa" data-act="fab" aria-label="Add expense">+</button></div>
  <div class="status">${OK?'Saved on this device':'Storage unavailable — data will not persist'} · ${new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div></div>`}
-function dock(){return `<nav class="dock">${T.map(t=>`<button data-act="tab" data-t="${t[0]}" class="${tab==t[0]?'on':''}" aria-label="${t[2]}"><span class="di">${t[1]}</span>${t[2]}</button>`).join('')}</nav>`}
+function renderDock(){var d=document.getElementById('dock'),ix=T.findIndex(t=>t[0]==tab);
+ if(!d.querySelector('.ind'))d.innerHTML='<span class="ind"></span>'+T.map(t=>`<button data-act="tab" data-t="${t[0]}" aria-label="${t[2]}"><span class="di">${t[1]}</span>${t[2]}</button>`).join('');
+ d.querySelector('.ind').style.setProperty('--i',ix);
+ d.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i==ix))}
 function render(){
  document.documentElement.dataset.t=S.theme||'noir';
- document.getElementById('app').innerHTML=header()+({home,months,spend,invest})[tab]()+dock();
+ document.getElementById('app').innerHTML=header()+({home,months,spend,invest})[tab]();renderDock();
 }
-function go(t){tab=t;achSel=achSel;render();scrollTo(0,0)}
+function go(t){tab=t;render();countUp();scrollTo(0,0)}
+function countUp(){document.querySelectorAll('[data-count]').forEach(el=>{var end=+el.dataset.count,t0=performance.now();function f(t){var p=Math.min(1,(t-t0)/700),e=1-Math.pow(1-p,3);el.textContent=inr(Math.round(end*e));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)})}
 function sheet(o){var s=document.getElementById('sheet');if(o)s.firstElementChild.innerHTML=`<h2>Add expense</h2>`+expForm(today());s.classList.toggle('open',!!o)}
 
 /* ---------- events ---------- */
@@ -518,6 +541,9 @@ document.addEventListener('click',ev=>{if(ev.target.id=='sheet')return sheet(fal
  if(b.dataset.act=='pinset')return openPinSet();
  if(b.dataset.act=='pinrm'&&confirm('Remove the app lock?')){localStorage.removeItem(PIN_KEY);save();render();toast('App lock removed');return}
  var a=b.dataset.act,k=b.dataset.k,i=b.dataset.i,j=b.dataset.j;
+ if(a=='amt'){b.form.a.value=b.dataset.v;return}
+ if(a=='note'){var nf=b.form;nf.n.value=b.dataset.v;nf.n.dispatchEvent(new Event('input',{bubbles:true}));return}
+ if(a=='onbdone'){localStorage.setItem('lv-onb','1');render();return}
  if(a=='tab')return go(b.dataset.t);
  if(a=='sub'){sub=b.dataset.s;render();return}
  if(a=='ach'){achSel=achSel==+i?-1:+i;render();return}
@@ -552,6 +578,9 @@ function downloadCSV(){var rows=[['Section','Date','Name','Category','Amount','N
  dl(rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n'),'loot-vault-'+today()+'.csv','text/csv')}
 
 document.addEventListener('input',e=>{if(e.target.id=='srch'){srch=e.target.value;render();var el=document.getElementById('srch');el.focus();el.setSelectionRange(srch.length,srch.length)}});
+document.addEventListener('input',e=>{var t=e.target;if(t.name!='n'||!t.form||t.form.dataset.k!='exp')return;var q=t.value.trim().toLowerCase();if(q.length<2)return;
+ var list=S.exp.slice().reverse().filter(x=>!x.auto&&x.n);var m=list.find(x=>x.n.trim().toLowerCase()==q)||list.find(x=>x.n.trim().toLowerCase().startsWith(q));
+ if(m){var nm=cname(m.c),sel=t.form.c;for(var o of sel.options){if(o.value==nm){sel.value=nm;break}}}});
 var tx,ty;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
 document.addEventListener('touchend',e=>{var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty,L=T.map(q=>q[0]),j=L.indexOf(tab)+(dx<0?1:-1);
